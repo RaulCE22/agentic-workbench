@@ -4,25 +4,25 @@ Empieza por este índice y abre únicamente los documentos necesarios para la ta
 
 | Área | Documento de entrada | Propósito |
 |---|---|---|
-| Agentes | agents/README.md | Herramientas CLI admitidas y organización compartida |
-| Compatibilidad CLI | agents/compatibilidad.md | Instrucciones, skills y adaptadores por proveedor |
-| Puesta en marcha | agents/puesta-en-marcha.md | Instalación, autenticación y uso de cuotas nativas |
-| Producto | product/vision.md | Visión del producto y principios de ingeniería |
-| Arquitectura | architecture/overview.md | Límites y mapa del sistema |
-| Entorno | architecture/runtime.md | Versiones de Node.js y compatibilidad |
-| Monorepo | architecture/monorepo.md | Espacios de trabajo y límites de paquetes |
-| Frontend | architecture/frontend.md | Convenciones adoptadas de frontend |
-| Backend | architecture/backend.md | Arquitectura propuesta del backend |
-| Infraestructura | architecture/infrastructure.md | Hetzner, Docker, Dockge, Traefik y Cloudflare |
-| Decisiones pendientes | architecture/pending-decisions.md | Preguntas que no deben resolverse por suposición |
-| Flujo de trabajo | workflows/feature-lifecycle.md | Ciclo de entrega de funcionalidades |
-| Contexto | workflows/context-management.md | Carga progresiva de contexto |
-| Calidad | quality/quality-gates.md | Criterios de verificación |
-| Seguridad | quality/security-baseline.md | Controles de seguridad básicos |
-| ADR | decisions/README.md | Registro de decisiones |
-| Plantillas | templates/ | Requisitos, ADR, planes y revisiones |
+| Producto | [Visión](product/vision.md) | Problema, usuarios, principios y límites |
+| Hoja de ruta | [Roadmap](product/roadmap.md) | Entregas incrementales y alcance |
+| Requisitos | [Requisitos](requirements/README.md) | Comportamiento y criterios de aceptación |
+| Arquitectura | [Visión general](architecture/overview.md) | Topología local y límites del sistema |
+| Backend | [Servidor local](architecture/backend.md) | API, sistema de archivos, procesos y persistencia |
+| Frontend | [Frontend](architecture/frontend.md) | Stack y convenciones de interfaz |
+| Runtime | [Runtime](architecture/runtime.md) | Versiones de Node.js y compatibilidad |
+| Monorepo | [Monorepo](architecture/monorepo.md) | Espacios de trabajo y límites de paquetes |
+| Seguridad | [Línea base](quality/security-baseline.md) | Protección de datos y operaciones locales |
+| Calidad | [Quality gates](quality/quality-gates.md) | Criterios de verificación |
+| Decisiones | [ADR](decisions/README.md) | Registro de decisiones aceptadas y propuestas |
+| Protocolos de agentes | [ADR-0006](decisions/ADR-0006-integracion-agentes.md) | Evaluación de integraciones por CLI |
+| Flujo de trabajo | [Ciclo de funcionalidades](workflows/feature-lifecycle.md) | Análisis, planificación, implementación y revisión |
+| Contexto | [Gestión del contexto](workflows/context-management.md) | Carga progresiva de información |
+| Plantillas | [Plantillas](templates/) | Requisitos, ADR, planes y revisiones |
+| Planes | [Planes de trabajo](../plans/README.md) | Trabajo activo y completado |
 
 ## Jerarquía documental
+
 1. Los requisitos definen el comportamiento deseado del producto.
 2. Los ADR aceptados definen decisiones arquitectónicas duraderas y sus consecuencias.
 3. Los documentos de arquitectura explican límites y convenciones estables.

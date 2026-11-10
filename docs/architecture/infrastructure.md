@@ -1,39 +1,34 @@
-# Arquitectura de infraestructura
+# Infraestructura y ejecución local
 
-Estado: plataforma de alojamiento existente; los detalles de despliegue se definen para cada aplicación.
+Estado: aplicación local; no existe infraestructura cloud prevista para el producto inicial.
 
-## Plataforma actual
-- Servidor Hetzner.
-- Docker y Docker Compose.
-- Dockge para gestionar stacks Compose.
-- Traefik como proxy inverso y punto de entrada TLS.
-- Cloudflare para DNS, gestión de dominios y controles perimetrales.
+## Modelo de despliegue
 
-## Ruta lógica de las peticiones
-Cloudflare DNS/perímetro -> entrada pública de Hetzner -> Traefik -> contenedor de aplicación.
+El usuario inicia un proceso local en su equipo y abre la interfaz en el navegador. El backend y el frontend se sirven desde el mismo origen local. No se requiere Docker, Hetzner, Dockge, Traefik ni Cloudflare para el desarrollo o uso personal.
 
-PostgreSQL y los servicios internos deben ser accesibles únicamente mediante redes Docker privadas. La administración de Dockge debe tener una vía de acceso privada y autenticada.
+## Datos
 
-## Responsabilidades del repositorio
-- Los Dockerfiles de aplicación viven junto a cada aplicación, normalmente en apps/<app>/Dockerfile.
-- La configuración de stacks y despliegue vive en infra/.
-- Mantén separadas la configuración Compose local y la de producción.
-- Versiona únicamente archivos .env.example con valores ficticios seguros.
-- Utiliza etiquetas de imagen deliberadas o SHA de commit en producción; evita latest.
-- Añade health checks y políticas de reinicio de forma consciente.
-- Ejecuta los contenedores como usuario no privilegiado cuando sea viable.
-- Expón únicamente los puertos que necesite Traefik. No publiques PostgreSQL.
+- Los repositorios permanecen en sus rutas originales.
+- La base de datos y las preferencias viven en el directorio de datos de usuario del sistema operativo.
+- Los logs locales no deben incluir credenciales ni secretos.
+- No se sincronizan datos con servicios externos.
+- No se almacenan claves API de modelos: cada CLI gestiona su autenticación.
 
-## Cloudflare y Traefik
-Para cada despliegue documenta dónde termina TLS, cómo se emiten los certificados, si está activo el proxy de Cloudflare y cómo se restringe el origen. Si Traefik utiliza el desafío DNS de Cloudflare, guarda el token API limitado en el servidor.
+## Red
 
-## Preparación para producción
-- DNS y modo proxy revisados.
-- Emisión y renovación TLS probadas.
-- Firewall limitado a los puertos necesarios.
-- Dockge protegido.
-- Base de datos sin puertos públicos.
-- Copia de seguridad y restauración probadas.
-- Comprobaciones de salud y logs disponibles.
-- Secretos almacenados fuera de Git.
-- Procedimiento de rollback documentado.
+- El servidor escucha únicamente en loopback.
+- No se publica el puerto en LAN ni en Internet.
+- No se configura reverse proxy ni DNS público.
+- No se expone la base de datos local en un puerto TCP.
+
+## Arranque y ciclo de vida
+
+La experiencia final deberá ofrecer un comando de inicio simple y abrir el navegador. Durante el desarrollo se podrán ejecutar frontend y backend por separado. La estrategia de empaquetado y actualización automática no forma parte de V0.1 y necesita una decisión propia.
+
+## Distribución futura
+
+No se adopta todavía Tauri, Electron ni un empaquetador nativo. La primera versión se validará como aplicación web servida por un proceso local. Una envoltura desktop solo se considerará si aporta valor claro en selección de carpetas, notificaciones, terminal o ciclo de vida del proceso.
+
+## Instalación reproducible
+
+Se mantiene pnpm workspaces y Node.js 26. Las dependencias, scripts y requisitos del runtime deben quedar fijados en el lockfile y la documentación del repositorio.

@@ -1,22 +1,31 @@
 # Decisiones de arquitectura pendientes
 
-Estas cuestiones están abiertas deliberadamente. Los agentes no deben adivinarlas ni establecer convenciones permanentes por su cuenta.
+Estas cuestiones están abiertas deliberadamente. Los agentes no deben resolverlas por suposición.
 
 | ID | Tema | Posición actual | Resolver antes de |
 |---|---|---|---|
-| BE-01 | Driver PostgreSQL | Comparar node-postgres (pg) y postgres.js con Drizzle + Better Auth | Primera base de API |
-| BE-02 | Contratos API | REST + OpenAPI frente a Hono RPC | Primera funcionalidad compartida frontend/API |
-| BE-03 | Errores y paginación | Definir un formato de respuesta estándar | Primer endpoint API |
-| BE-04 | Contratos compartidos | packages/contracts es una posibilidad | Primer contrato compartido |
-| BE-05 | Better Auth | Confirmar dominio de cookies, trusted origins, CORS y sesiones | Implementación de autenticación |
-| BE-06 | Proveedor de correo | Todavía no seleccionado | Verificación y recuperación |
-| DB-01 | Operaciones de base de datos | Definir backup, restauración, retención y migraciones | Datos de producción |
-| INF-01 | Topología TLS | Confirmar Traefik ACME o certificado de origen Cloudflare y modo proxy | Primer despliegue público |
-| INF-02 | Gestión de secretos | Elegir almacenamiento y rotación en el servidor | Primer despliegue productivo |
-| QA-01 | Herramienta E2E | Vitest está adoptado para unitarias/componentes; E2E pendiente | Primer recorrido crítico |
+| DB-01 | Driver SQLite | Comparar better-sqlite3, node:sqlite y alternativas compatibles con Drizzle | Primera persistencia |
+| DB-02 | ORM y migraciones | Drizzle es candidato; confirmar coste/beneficio en SQLite | Primer esquema persistente |
+| SEC-01 | Autenticación de la instancia local | Token de instancia/cookie local, validación Host/Origin y protección CSRF | Primera API accesible desde navegador |
+| FS-01 | Alta y autorización de proyectos | El usuario registra una ruta; canonicalización, symlinks y exclusiones | Primer explorador de archivos |
+| FS-02 | Archivos sensibles | Definir exclusión de secretos, límites de tamaño y vista previa binaria | Primer visor de archivos |
+| GIT-01 | Integración Git | execFile con Git CLI frente a librería; salida estructurada y límites | Primer panel Git |
+| API-01 | Canal de eventos | SSE como preferencia inicial frente a WebSocket | Primer evento asíncrono |
+| PROC-01 | Gestión de procesos | Spawn, PTY, señales, timeout, entorno y PATH en procesos iniciados desde GUI | Primer lanzamiento CLI |
+| AG-01 | Contrato común de eventos | Definir envoltorio común sin perder payloads específicos | Primer adaptador de agente |
+| AG-02 | ACP | Versiones, métodos y extensiones realmente soportadas por Cursor y Antigravity | Primer adaptador ACP |
+| AG-03 | Codex App Server | Protocolo aún experimental; fijar versión y estrategia de compatibilidad | Integración Codex estable |
+| AG-04 | Claude Code | Evaluar SDK/stream-json y su capacidad de interacción/permiso | Integración Claude Code |
+| AG-05 | Persistencia de sesiones | Qué datos se guardan, retención y limpieza de salidas sensibles | Historial de sesiones |
+| UX-01 | Empaquetado | Aplicación web local primero; Tauri/Electron no seleccionados | Distribución a otros equipos |
+| QA-01 | E2E | Elegir herramienta para probar browser + API + filesystem | Primer flujo vertical crítico |
 
-Para resolver una cuestión:
-1. Investiga las opciones soportadas.
-2. Construye una prueba de concepto pequeña si existe riesgo de integración.
-3. Registra la elección en un ADR.
-4. Actualiza este registro y los documentos de arquitectura relacionados.
+## Proceso para cerrar una decisión
+
+1. Revisar documentación oficial de la versión instalada.
+2. Construir una prueba de concepto pequeña cuando exista riesgo de integración.
+3. Evaluar seguridad, mantenimiento, portabilidad y coste.
+4. Registrar la elección en un ADR.
+5. Actualizar arquitectura y este registro.
+
+No conviertas una integración experimental en dependencia estable sin fijar una versión de referencia y comprobar los flujos críticos.

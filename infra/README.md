@@ -1,11 +1,7 @@
 # Infraestructura
 
-Este directorio contiene documentación de despliegue y configuración de infraestructura versionada. Los Dockerfiles de aplicación pertenecen a cada aplicación; la configuración de stacks vive aquí.
+Agentic Workbench es una aplicación local-first. No necesita despliegue en Hetzner, Docker, Dockge, Traefik ni Cloudflare para funcionar.
 
-- hetzner/: base del servidor y operaciones.
-- docker/: convenciones y plantillas Dockerfile/Compose.
-- dockge/: gestión de stacks.
-- traefik/: entrada, proxy inverso y TLS.
-- cloudflare/: DNS, proxy y seguridad.
+La carpeta infra se conserva por herencia de la base agentic-engineering y no contiene infraestructura activa del producto. No añadas configuraciones de despliegue cloud salvo que se apruebe un caso de distribución remota distinto de la aplicación local.
 
-Nunca incluyas archivos de entorno reales, tokens, claves privadas, credenciales ni datos de producción.
+La persistencia local se guarda en el directorio de datos de usuario, fuera de los repositorios registrados. El servidor solo escucha en loopback.
