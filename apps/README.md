@@ -1,9 +1,8 @@
 # Aplicaciones
 
-Cada directorio de apps/ representa una aplicación desplegable de forma independiente, con su propio package.json, compilación, pruebas, configuración de ejecución y Dockerfile.
+Cada directorio de apps/ representa una aplicación del producto. El Workbench se distribuye inicialmente como una aplicación local con frontend y backend coordinados, no como servicios cloud independientes.
 
-Aplicaciones iniciales:
-- web/: aplicación de navegador React + Vite.
-- api/: API Node.js + Hono (stack backend propuesto).
+- web/: SPA React + Vite que se ejecuta en el navegador local.
+- api/: servidor local Node.js + Hono; único componente con acceso al sistema de archivos, Git, procesos y persistencia.
 
-Las futuras aplicaciones pueden incluir workers, herramientas administrativas o clientes móviles. Añade una nueva aplicación cuando tenga un runtime o ciclo de despliegue independiente; en caso contrario, mantenla como módulo de una aplicación existente.
+Mantén separados los módulos de frontend y backend, pero evita tratarlos como microservicios. No añadas Dockerfiles ni configuración de despliegue remoto sin una necesidad aprobada.

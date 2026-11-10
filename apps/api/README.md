@@ -1,14 +1,21 @@
-# Aplicación API
+# Backend local
 
-Directorio reservado para el backend Node.js. Stack candidato: Hono, PostgreSQL, Drizzle ORM/Drizzle Kit, Better Auth y Zod.
+Directorio reservado para el servidor Node.js + Hono. Todavía no se ha generado código fuente.
 
-La decisión del backend sigue propuesta en ADR-0003. Antes de generar la aplicación, cierra las decisiones de driver, contratos API, formato de errores, proveedor de correo y cookies de autenticación que aparecen en docs/architecture/pending-decisions.md.
+Este backend es el proceso local de confianza que conecta la interfaz con el sistema de archivos, Git, procesos CLI y persistencia SQLite. No es una API remota multiusuario.
+
+Consulta:
+- docs/architecture/backend.md
+- docs/architecture/overview.md
+- docs/quality/security-baseline.md
+- docs/architecture/pending-decisions.md
 
 Principios:
-- Empezar como monolito modular.
-- Mantener ligeros los manejadores de rutas.
-- Mantener la lógica de dominio y aplicación independiente de Hono.
-- Mantener el esquema Drizzle y las migraciones dentro de esta aplicación.
-- Validar las entradas externas con Zod.
-- Aplicar autorización en el servidor.
-- Añadir comprobaciones de salud, cierre ordenado, logs estructurados y configuración de producción.
+- Escuchar únicamente en loopback.
+- Autorizar explícitamente las raíces de proyecto.
+- Canonicalizar rutas y comprobar symlinks.
+- No ejecutar comandos arbitrarios ni usar shell interpolation.
+- Mantener los módulos de dominio independientes de Hono.
+- Validar entradas con Zod.
+- Persistir solo metadatos propios de Workbench fuera de los repositorios.
+- No implementar escritura de archivos ni operaciones Git mutables en V0.1.
