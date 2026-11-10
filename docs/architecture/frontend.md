@@ -6,11 +6,11 @@ Estado: stack adoptado. La aplicación se sirve localmente desde el backend Node
 
 - React + Vite + TypeScript.
 - React Router en Data Mode.
-- TanStack Query (@tanstack/react-query) para estado del servidor/API local.
-- React Hook Form para estado de interacción de formularios.
-- Zod para validación en runtime, conectado mediante @hookform/resolvers.
-- Componentes shadcn/ui con Tailwind CSS.
-- Zustand para pequeñas partes del estado de cliente, solo cuando React state o URL state no sean suficientes.
+- TanStack Query para estado del servidor/API local.
+- React Hook Form para formularios.
+- Zod para validación en runtime.
+- shadcn/ui con Tailwind CSS.
+- Zustand para estado de cliente solo cuando React state o URL state no sean suficientes.
 - Vitest para pruebas unitarias y de componentes.
 
 ## Áreas principales
@@ -36,7 +36,7 @@ Estado: stack adoptado. La aplicación se sirve localmente desde el backend Node
 
 ```text
 apps/web/src/
-  app/                  # router, providers, arranque
+  app/
   features/<feature>/
     api/
     components/
@@ -44,8 +44,8 @@ apps/web/src/
     schemas/
     routes/
     types/
-  components/ui/        # componentes shadcn/ui locales
-  lib/                  # cliente API y utilidades
+  components/ui/
+  lib/
   styles/
 ```
 
