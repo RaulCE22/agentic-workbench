@@ -1,42 +1,50 @@
 # Visión general de la arquitectura
 
-## Estructura del sistema
-Monorepo pnpm con aplicaciones desplegables de forma independiente, paquetes compartidos deliberadamente pequeños, documentación de producto y arquitectura, skills independientes del proveedor, scripts de ingeniería y recursos de despliegue.
+## Topología
 
-## Topología inicial
+Aplicación web servida localmente por un proceso Node.js. El navegador es la interfaz; el backend local es el único componente que puede acceder al sistema de archivos, Git, procesos CLI y persistencia.
 
-```text
-Navegador
-   |
- HTTPS
-   v
-Cloudflare (DNS / controles perimetrales)
-   |
-Servidor Hetzner
-   |
-Proxy inverso Traefik
-   +---- Contenedor web (apps/web)
-   +---- Contenedor API (apps/api)
-                  |
-              PostgreSQL
+```mermaid
+flowchart TB
+  U[Usuario] --> B[Navegador]
+  B <-->|HTTP / SSE| L[Servidor local Hono]
+  L --> F[Servicio de archivos]
+  L --> G[Adaptador Git]
+  L --> P[Gestor de procesos]
+  P --> C[CLI nativos]
+  L --> D[(SQLite local)]
+  C -->|eventos / stdout / stderr| P
+  F --> R[Repositorios autorizados]
+  G --> R
 ```
 
-Dockge gestiona los stacks de Docker Compose en el servidor. PostgreSQL debe permanecer en una red Docker privada y no publicarse directamente en Internet. Esta es una topología lógica, no una configuración de producción lista para desplegar.
+## Componentes
 
-## Arquitectura de aplicaciones
-- Frontend: SPA React compilada con Vite.
-- Backend: API Node.js propuesta con Hono.
-- Persistencia: PostgreSQL propuesto con Drizzle ORM y Drizzle Kit.
-- Autenticación: Better Auth propuesto.
-- Límite compartido: contratos de transporte Zod en packages/contracts cuando estén justificados.
-- Estilo del backend: empezar como monolito modular; extraer servicios únicamente cuando se justifique un despliegue independiente.
+- apps/web: SPA React que presenta proyectos, funcionalidades, agentes y Git.
+- apps/api: servidor local Hono sobre Node.js. Valida peticiones, aplica permisos y orquesta servicios locales.
+- packages/contracts: esquemas Zod y tipos compartidos únicamente cuando frontend y backend los necesiten.
+- SQLite: persistencia local de proyectos registrados, preferencias, sesiones y metadatos del Workbench.
+- CLI nativos: procesos independientes, ejecutados con la configuración y autenticación del proveedor.
 
-## Dirección de dependencias
-- Las aplicaciones pueden depender de paquetes compartidos; los paquetes compartidos nunca dependen de aplicaciones.
-- El frontend nunca importa implementación del backend, esquema de base de datos ni secretos.
-- El backend es propietario de la persistencia y de la implementación de autenticación.
-- Los contratos compartidos contienen esquemas de transporte y tipos, no entidades de base de datos ni lógica de negocio.
-- La infraestructura no debe filtrarse a la lógica del dominio.
+## Límites y dependencias
 
-## Cambios de arquitectura
-Un cambio en un límite arquitectónico aceptado requiere un ADR. Un cambio funcional dentro de los límites existentes suele necesitar un requisito y un plan de implementación.
+- El frontend no accede directamente al sistema de archivos ni ejecuta procesos del sistema.
+- El backend es el propietario de la base de datos, del acceso a disco, Git y procesos.
+- Los módulos de dominio no dependen de Hono ni de componentes React.
+- Los adaptadores de proveedor traducen protocolos específicos a un contrato interno de eventos.
+- Las operaciones Git y de archivos se implementan como servicios separados y con permisos explícitos.
+- No se crean microservicios ni servicios cloud en la primera versión.
+
+## Modelo de ejecución
+
+Una instancia local del backend gestiona uno o varios proyectos autorizados. Cada sesión de agente se ejecutará con un directorio de trabajo explícito. Cuando dos agentes deban modificar código en paralelo, se utilizarán worktrees distintos; compartir una carpeta de escritura no será el comportamiento predeterminado.
+
+## Seguridad
+
+El backend debe escuchar exclusivamente en loopback. Las rutas de archivos deben permanecer dentro de raíces registradas, incluso después de resolver enlaces simbólicos. Los procesos se ejecutan sin interpolación de shell, con comandos y argumentos validados, límites de salida y cancelación. Las operaciones mutables requieren aprobación humana.
+
+Consulta backend.md, quality/security-baseline.md y pending-decisions.md.
+
+## Estado de las decisiones
+
+La topología local está aceptada en ADR-0005. La selección exacta del driver SQLite, la estrategia de autenticación local y los protocolos definitivos de agentes siguen pendientes de validación técnica.

@@ -1,69 +1,90 @@
-# Arquitectura backend
+# Arquitectura del backend local
 
-Estado: propuesta; todavía no está ratificada por completo.
+Estado: dirección arquitectónica aceptada; detalles de implementación pendientes de pruebas técnicas.
 
-El stack candidato encaja con el monorepo TypeScript, pero siguen pendientes el driver PostgreSQL, la estrategia de contratos API, las convenciones de error y los detalles de despliegue de autenticación. Los agentes no deben tratar estas decisiones como cerradas.
+## Responsabilidad
 
-## Tecnologías candidatas
-- Node.js 26 LTS.
-- Hono con @hono/node-server.
-- PostgreSQL.
-- Drizzle ORM y Drizzle Kit.
-- Better Auth.
-- Zod y @hono/zod-validator.
+El backend no es una API de negocio remota. Es el proceso de confianza local que conecta la interfaz con los recursos del sistema operativo.
 
-Better Auth documenta una integración directa con Hono mediante las API Web Request/Response y ofrece un adaptador Drizzle compatible con PostgreSQL. No reimplementes la gestión de contraseñas ni sesiones.
+Responsabilidades:
+- Servir la SPA y la API desde un mismo origen local.
+- Validar identidad de la instancia, origen y permisos de las peticiones.
+- Mantener el registro de proyectos y preferencias locales.
+- Leer archivos y enumerar directorios dentro de raíces autorizadas.
+- Renderizar datos seguros para el visor de documentación.
+- Consultar Git y producir resúmenes/diffs.
+- Gestionar procesos CLI y sus flujos de entrada/salida en las fases que lo habiliten.
+- Persistir metadatos, sesiones y eventos locales.
 
-## Estilo propuesto: monolito modular
+## Stack
+
+- Node.js 26.
+- Hono con adaptador Node.
+- TypeScript estricto.
+- Zod para validar entradas y salidas en límites de confianza.
+- SQLite como persistencia local prevista; ORM y driver pendientes.
+- Server-Sent Events (SSE) como primera opción para transmitir actividad del backend a la SPA; confirmar en prueba técnica.
+
+No se utiliza PostgreSQL ni Better Auth en la arquitectura inicial: no hay servidor remoto ni usuarios multiusuario. La autenticación de los agentes permanece en sus respectivos CLI.
+
+## Organización propuesta
 
 ```text
 apps/api/src/
-  app/                  # composición de Hono y middleware
-  config/               # configuración de entorno validada
+  app/
+  config/
   modules/
-    auth/
-    <domain>/
-      routes/
-      schemas/
-      services/
-      repositories/
-      types/
-  db/
-    client.ts
-    schema/
-    migrations/
+    projects/
+    files/
+    documentation/
+    features/
+    git/
+    agents/                # V0.2
+    settings/
+  infrastructure/
+    database/
+    filesystem/
+    processes/
   shared/
     errors/
-    middleware/
+    security/
+    utils/
 ```
 
-Esta estructura es un punto de partida, no una obligación de crear capas vacías. La primera funcionalidad de dominio debe ayudar a validar la organización.
+No crees carpetas vacías para capas teóricas. Añade cada módulo cuando tenga una responsabilidad implementada.
 
-## Reglas de dependencias
-- Las rutas traducen HTTP y llaman a servicios de aplicación.
-- Los servicios o casos de uso implementan los flujos de la aplicación.
-- Las reglas de dominio no dependen del contexto Hono ni de objetos HTTP.
-- Los repositorios son propietarios del acceso a la base de datos.
-- El esquema Drizzle y sus tipos de consulta permanecen en el backend.
-- Valida con Zod los datos no confiables en los límites del sistema.
-- La autenticación establece la identidad; la autorización se aplica en la operación del servidor correspondiente.
-- Devuelve un formato de error coherente; no expongas stack traces ni detalles internos de la base de datos.
+## Acceso al sistema de archivos
 
-## Base de datos y migraciones
-- PostgreSQL es la fuente de verdad de los datos.
-- El esquema y las migraciones pertenecen a apps/api.
-- Genera migraciones SQL con Drizzle Kit y revísalas.
-- Aplica migraciones versionadas en los despliegues. No utilices schema push como proceso de migración en producción.
-- Separa credenciales y bases de datos por entorno.
-- Define copias de seguridad, restauración y retención antes de almacenar datos de producción.
+- Solo se accede a proyectos que el usuario haya registrado explícitamente.
+- Canonicaliza la raíz autorizada y cada ruta solicitada.
+- Resuelve enlaces simbólicos y comprueba que el destino sigue dentro de la raíz permitida.
+- Bloquea traversal, rutas absolutas inesperadas y dispositivos especiales.
+- Ignora por defecto directorios voluminosos como .git, node_modules, dist, build, .next, .turbo y coverage.
+- Aplica límites de tamaño, profundidad y número de entradas.
+- No lee secretos por defecto; define política explícita para archivos como .env, claves y credenciales.
+- No permite escritura durante V0.1.
 
-## Decisiones pendientes
-1. Driver node-postgres (pg) o postgres.js.
-2. Contratos REST + OpenAPI, Hono RPC o una combinación documentada.
-3. Formato de errores y convenciones de paginación.
-4. Qué esquemas Zod compartidos pertenecen a packages/contracts.
-5. Proveedor de correo para verificación y recuperación de contraseña.
-6. Dominio de cookies, trusted origins, CORS y comportamiento del proxy en cada despliegue.
-7. Limitación de peticiones, eventos de auditoría y política de recuperación de cuentas.
+## Procesos y Git
 
-Consulta architecture/pending-decisions.md y ADR-0003.
+Los procesos deben iniciarse mediante APIs de proceso con ejecutable y argumentos separados. No se usa shell: true, interpolación ni comandos arbitrarios proporcionados por el navegador. Cada proceso debe tener directorio de trabajo validado, timeout, límites de stdout/stderr, gestión de señales y registro de código de salida.
+
+Git se consulta inicialmente en modo de solo lectura. Las operaciones de escritura se incorporarán por fases y con confirmación explícita.
+
+## API y eventos
+
+La API se organiza por módulos y contratos Zod. Los eventos asíncronos (por ejemplo, cambios de estado de un agente) pueden transmitirse por SSE. Los eventos de los CLI se conservan con su identificador de proveedor y versión, además de cualquier representación común.
+
+## Seguridad del servidor local
+
+La instancia debe:
+- Escuchar únicamente en 127.0.0.1 o ::1.
+- Rechazar encabezados Host y orígenes no permitidos.
+- Proteger operaciones mutables frente a CSRF y DNS rebinding.
+- Usar un mecanismo de sesión local no reutilizable entre instancias; la solución exacta queda pendiente de ADR.
+- Evitar CORS abierto.
+- No exponer consola de depuración ni endpoints de administración.
+- Mantener logs locales sin credenciales ni secretos.
+
+## Persistencia
+
+Se prevé una base SQLite en el directorio de datos de usuario del sistema operativo, fuera del repositorio gestionado. Los archivos de código y documentación siguen perteneciendo a cada proyecto y no se copian a la base de datos. La selección de driver, ORM, migraciones y política de backup requiere una prueba técnica antes de implementarse.
