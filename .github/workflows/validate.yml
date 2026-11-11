@@ -22,7 +22,7 @@ jobs:
           node-version-file: .nvmrc
 
       - name: Instalar pnpm fijado
-        run: npm install --global pnpm@12.18.0
+        run: npm install --global pnpm@10.28.2
 
       - name: Validar la base de ingeniería
         run: pnpm run verify

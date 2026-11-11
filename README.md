@@ -80,10 +80,10 @@ Las integraciones están sujetas a validación con las versiones instaladas. Con
 
 ## Desarrollo
 
-Requisitos: Node.js 26 y pnpm 12. Consulta docs/architecture/runtime.md.
+Requisitos: Node.js 24 (24.15.0) y pnpm 10 (10.28.2). Consulta docs/architecture/runtime.md.
 
 ```bash
-npm install --global pnpm@12.18.0
+npm install --global pnpm@10.28.2
 pnpm install
 pnpm run verify
 ```

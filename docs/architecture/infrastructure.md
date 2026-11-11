@@ -31,4 +31,4 @@ No se adopta todavía Tauri, Electron ni un empaquetador nativo. La primera vers
 
 ## Instalación reproducible
 
-Se mantiene pnpm workspaces y Node.js 26. Las dependencias, scripts y requisitos del runtime deben quedar fijados en el lockfile y la documentación del repositorio.
+Se mantiene pnpm workspaces y Node.js 24 (24.15.0). Las dependencias, scripts y requisitos del runtime deben quedar fijados en el lockfile y la documentación del repositorio.

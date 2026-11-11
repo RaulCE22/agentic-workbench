@@ -10,8 +10,8 @@ const pkg = JSON.parse(await readFile("package.json", "utf8"));
 const nodeMajor = Number(process.versions.node.split(".")[0]);
 const workspace = await readFile("pnpm-workspace.yaml", "utf8");
 
-if (nodeMajor !== 26) errors.push(`Se esperaba Node.js 26.x, pero se encontró ${process.versions.node}. Utiliza .nvmrc/.node-version.`);
-if (!String(pkg.packageManager ?? "").startsWith("pnpm@12.")) errors.push("package.json debe fijar pnpm 12.x.");
+if (nodeMajor !== 24) errors.push(`Se esperaba Node.js 24.x, pero se encontró ${process.versions.node}. Utiliza .nvmrc/.node-version.`);
+if (!String(pkg.packageManager ?? "").startsWith("pnpm@10.")) errors.push("package.json debe fijar pnpm 10.x.");
 if (!workspace.includes("apps/*") || !workspace.includes("packages/*")) errors.push("pnpm-workspace.yaml debe incluir apps/* y packages/*.");
 
 for (const directory of ["apps/web", "apps/api", "packages/contracts", "infra", "docs", ".agents/skills", "scripts/engineering"]) {

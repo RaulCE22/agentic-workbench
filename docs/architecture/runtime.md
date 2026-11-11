@@ -2,10 +2,11 @@
 
 ## Versión de Node.js
 
-- Runtime del proyecto: Node.js 26 LTS.
-- Versión inicial fijada: 26.13.0.
-- Node 26 entró en Active LTS el 28-10-2026. Su fin de vida programado es el 30-04-2029; el calendario puede cambiar.
-- Node.js se fija mediante .nvmrc, .node-version y engines en package.json.
+- Runtime del proyecto: Node.js 24 LTS.
+- Versión fijada: 24.15.0.
+- Justificación del cambio: fijado en Node.js 24.15.0 por compatibilidad con el sistema y el entorno de ejecución del equipo.
+- Node 24 entró en Active LTS en octubre de 2025. Su fin de vida programado es el 30-04-2028; el calendario puede cambiar según las políticas de soporte oficiales.
+- Node.js se fija mediante .nvmrc, .node-version y engines en package.json (>=24.0.0 <25.0.0).
 
 Referencias oficiales:
 - https://nodejs.org/en/about/previous-releases
@@ -14,29 +15,28 @@ Referencias oficiales:
 
 ## Compatibilidad con macOS
 
-Los binarios oficiales de Node.js 24 y 26 para macOS requieren macOS 13.5 o posterior. Un Mac con macOS 12 Monterey no puede ejecutar estos binarios oficiales.
+Los binarios oficiales de Node.js 24 para macOS requieren macOS 13.5 o posterior. Un Mac con macOS 12 Monterey no puede ejecutar estos binarios oficiales.
 
 Node.js 22 es compatible con versiones anteriores de macOS, incluida macOS 11, pero su fin de vida está programado para el 30-04-2027. No se selecciona como runtime estándar de esta nueva base reutilizable porque está demasiado cerca del fin de soporte.
 
 Solución preferida: actualizar el Mac de desarrollo a macOS 13.5 o posterior, idealmente a una versión de macOS que siga teniendo soporte. Si no es posible, utiliza un entorno de desarrollo remoto Linux soportado en lugar de cambiar silenciosamente la versión estándar de Node del repositorio.
 
-El runtime Node 26 sobre Linux utilizado en CI y despliegue no está afectado por el requisito de los binarios de macOS.
+El runtime Node 24 sobre Linux utilizado en CI y despliegue no está afectado por el requisito de los binarios de macOS.
 
 ## pnpm
 
-- Versión inicial del gestor de paquetes: pnpm 12.18.0.
-- package.json declara packageManager y la versión principal compatible de pnpm.
-- Node.js 25 y posteriores no incluyen Corepack. Instala la versión fijada de pnpm directamente:
+- Versión fijada del gestor de paquetes: pnpm 10.28.2.
+- package.json declara packageManager (pnpm@10.28.2) y el rango de versiones compatible (>=10.0.0 <13.0.0).
+- Instalación de la versión fijada de pnpm:
 
 ```bash
-npm install --global pnpm@12.18.0
+npm install --global pnpm@10.28.2
 ```
 
-También se puede instalar por separado una versión compatible de Corepack. No presupongas que Corepack viene incluido con Node 26.
+El script scripts/engineering/check-workspace.mjs valida que la versión de Node sea 24.x y que packageManager declare pnpm 10.x.
 
 Referencias oficiales:
 - https://pnpm.io/
-- https://pnpm.io/blog/releases/12.18.0
 - https://github.com/nodejs/node/blob/main/doc/contributing/distribution.md
 
 ## Actualización del runtime

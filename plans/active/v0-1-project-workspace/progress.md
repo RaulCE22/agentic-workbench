@@ -24,7 +24,7 @@ Solo documentación de producto, arquitectura y planificación. No se ha generad
 
 | Comando/comprobación | Resultado | Notas |
 |---|---|---|
-| pnpm run verify | No ejecutado | Debe ejecutarse en un checkout local con Node.js 26 y pnpm 12 |
+| pnpm run verify | No ejecutado | Debe ejecutarse en un checkout local con Node.js 24 y pnpm 10 |
 | Pruebas de aplicación | No ejecutadas | Todavía no existe aplicación |
 
 ## Decisiones y descubrimientos

@@ -18,7 +18,7 @@ Responsabilidades:
 
 ## Stack
 
-- Node.js 26.
+- Node.js 24 (24.15.0).
 - Hono con adaptador Node.
 - TypeScript estricto.
 - Zod para validar entradas y salidas en límites de confianza.
