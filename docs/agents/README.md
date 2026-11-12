@@ -20,4 +20,4 @@ Consulta compatibilidad.md y puesta-en-marcha.md para diferencias de versión y 
 3. Las configuraciones específicas de proveedor solo deben contener ajustes sin equivalente compartido.
 4. No configures claves API ni proveedores externos: utiliza autenticación nativa de cada CLI.
 5. La autenticación con una cuenta no garantiza acceso ilimitado ni gratuito; los límites dependen del plan.
-6. El Workbench integrará los CLI como procesos locales y no llamará directamente a APIs de modelos.
+6. Los CLI se usan como herramientas de desarrollo fuera de Workbench. El producto no los ejecuta ni llama directamente a APIs de modelos.

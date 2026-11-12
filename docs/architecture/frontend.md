@@ -17,8 +17,8 @@ Estado: stack adoptado. La aplicación se sirve localmente desde el backend Node
 
 - Project Workspace: selección de proyecto, árbol de archivos y resumen.
 - Documentation: Markdown, diagramas Mermaid y navegación documental.
-- Features: requisitos, planes, tareas y trazabilidad.
-- Agent Center: sesiones, eventos y permisos (V0.2).
+- Project State: roadmap, planes, tareas e hitos derivados de los documentos del proyecto.
+- Features: requisitos y criterios de aceptación enlazados con sus planes.
 - Git: estado, ramas y diferencias; operaciones de escritura en fases posteriores.
 
 ## Responsabilidades

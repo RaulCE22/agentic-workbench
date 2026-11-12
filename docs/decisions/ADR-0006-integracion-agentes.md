@@ -1,10 +1,12 @@
 # ADR-0006: Estrategia de integración de agentes CLI
 
-- Estado: Propuesto
+- Estado: Aplazado
 - Fecha: 2026-11-10
 - Responsable de la decisión: Propietario del proyecto
 
 ## Contexto
+
+> Esta propuesta queda aplazada. El enfoque actual de Workbench es leer y presentar el estado declarado en los repositorios; no ejecutar ni observar agentes. La evidencia técnica siguiente se conserva por si una necesidad futura justifica reabrir la decisión.
 
 Workbench debe iniciar y observar agentes de distintos proveedores, pero cada CLI expone capacidades y protocolos diferentes. La aplicación necesita una vista homogénea sin ocultar las diferencias ni depender de APIs de modelos externas.
 

@@ -23,7 +23,7 @@
 
 ## Integración en Agentic Workbench
 
-La estrategia del producto está documentada en ADR-0006. Los adaptadores de Workbench no deben asumir que ACP, App Server y stream-json son equivalentes. Deben preservar eventos originales, normalizar solo los conceptos comunes y declarar capacidades específicas por proveedor.
+La integración de agentes en el producto está aplazada en ADR-0006 y no forma parte del alcance actual. Si se reconsidera, los adaptadores no deben asumir que ACP, App Server y stream-json son equivalentes: deberán preservar eventos originales, normalizar solo conceptos comunes y declarar capacidades específicas por proveedor.
 
 ## Modelos y facturación
 

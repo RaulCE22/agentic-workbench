@@ -1,6 +1,6 @@
 # Hoja de ruta del producto
 
-La hoja de ruta está organizada por capacidades que aportan valor por sí mismas. Las versiones no implican fechas ni una promesa de implementación automática.
+La hoja de ruta de cada repositorio describe ese proyecto. En este archivo, el repositorio de Agentic Workbench describe su propia hoja de ruta. Las versiones no implican fechas ni una promesa de implementación automática.
 
 ## V0.1 — Project Workspace
 
@@ -15,69 +15,53 @@ Incluye:
 - Vista Git de solo lectura: rama, estado, ficheros modificados y diff.
 - Persistencia local de proyectos registrados y preferencias.
 
-No incluye:
-- Lanzamiento de agentes.
-- Edición de código o documentos desde Workbench.
-- Escritura, staging, commit, merge o push de Git.
-- Worktrees.
-- Ejecución de comandos arbitrarios.
-- Sincronización remota, login cloud o colaboración.
+Estado: completado.
 
-## V0.2 — Agent Center
+## V0.2 — Estado del repositorio
 
-**Objetivo:** ejecutar y observar los CLI admitidos desde la interfaz.
+**Objetivo:** ofrecer una vista resumida del estado declarado por cada repositorio.
 
-Incluye:
-- Detección y configuración de ejecutables CLI.
-- Inicio, cancelación y seguimiento de sesiones.
-- Integraciones específicas para Cursor, Antigravity, Codex y Claude Code.
-- Flujo de eventos normalizado y preservación de eventos originales.
-- Mensajes visibles, llamadas a herramientas, salida, errores, permisos y cambios de archivos.
-- Aprobación y rechazo de permisos desde la interfaz cuando el protocolo lo soporte.
-- Historial local de sesiones y relación con proyectos.
+Alcance propuesto:
+- Mostrar el roadmap del repositorio seleccionado.
+- Resumir planes y tareas en curso y elementos completados.
+- Mostrar hitos y enlazar cada elemento con su documento fuente.
+- Leer una estructura común que todos los repositorios incorporados acuerden seguir.
+- No mantener en Workbench una copia de los estados del repositorio.
 
-Condición: cada adaptador debe superar una prueba técnica con una versión concreta del CLI. No se debe prometer paridad entre proveedores.
+La estructura documental y las reglas para representar estados, tareas e hitos deben definirse antes de implementar esta versión. No se ha fijado todavía un mecanismo de actualización automática.
 
-## V0.3 — Feature Lifecycle
+## V0.3 — Trazabilidad de funcionalidades
 
-**Objetivo:** gestionar el ciclo completo de una funcionalidad.
+**Objetivo:** hacer navegable el ciclo documentado de cada funcionalidad.
 
-Incluye:
-- Fichas de funcionalidades y requisitos.
-- Planes, tareas, bloqueos y progreso.
-- Criterios de aceptación y evidencias de verificación.
-- Sesiones de agentes vinculadas a funcionalidades.
-- Historial de actividad y trazabilidad requisito → plan → sesión → cambios.
+Alcance propuesto:
+- Relacionar requisitos, criterios de aceptación, planes, tareas y evidencias.
+- Mostrar dependencias, bloqueos y resultados de verificación declarados en los documentos.
+- Detectar referencias y estados ausentes o inconsistentes.
 
-## V0.4 — Git & Worktrees
+## V0.4 — Git y aislamiento de tareas
 
-**Objetivo:** revisar y controlar cambios desde el espacio de trabajo.
+**Objetivo:** facilitar la revisión de cambios y el aislamiento del trabajo.
 
-Incluye:
+Alcance propuesto:
 - Historial de commits y comparación de ramas.
-- Creación y gestión controlada de ramas.
-- Creación de worktrees por tarea o agente.
-- Diff por archivo y vista de cambios.
-- Stage, commit y merge con confirmación humana.
-- Detección de conflictos y guía de resolución.
-- Integración opcional con Pull Requests.
+- Diferencias por archivo y vistas vinculadas a tareas.
+- Gestión controlada de ramas y worktrees, con confirmación humana para operaciones mutables.
+- Integración opcional con Pull Requests si aporta valor al flujo local.
 
-## V0.5 — Orquestación
+## Fuera del alcance actual
 
-**Objetivo:** coordinar tareas con varios agentes sin perder aislamiento ni trazabilidad.
+- Ejecutar o controlar agentes CLI desde Workbench.
+- Integraciones por proveedor, normalización de eventos de agentes y orquestación multiagente.
+- Mantener tareas o estados en una base de datos separada de los archivos del repositorio.
+- Inferir actividad de agentes a partir de cambios de archivos.
 
-Incluye:
-- Descomposición explícita de una funcionalidad en tareas.
-- Asignación a agentes y ejecución paralela en worktrees aislados.
-- Dependencias entre tareas y estados de bloqueo.
-- Revisión independiente por otro agente.
-- Integración controlada de resultados.
-- Panel global de recursos, sesiones y actividad.
+Las integraciones de agentes podrán reconsiderarse mediante una nueva decisión si aparece una necesidad concreta.
 
 ## Condiciones para avanzar entre fases
 
 - La fase anterior debe aportar valor y pasar sus controles de calidad.
-- Las integraciones externas necesitan una prueba técnica reproducible.
-- Las decisiones de seguridad se resuelven antes de habilitar escritura o ejecución.
-- No se introduce automatización multiagente hasta que el aislamiento de carpetas y la trazabilidad funcionen.
+- La estructura común debe probarse con el repositorio de Workbench y otro repositorio antes de ampliar el soporte.
+- Las reglas de lectura deben tratar el contenido del repositorio como datos no confiables.
+- Las operaciones de escritura o Git mutables requieren decisiones de seguridad y confirmación humana.
 - Se prefiere completar un flujo vertical pequeño frente a crear pantallas vacías para todas las áreas.

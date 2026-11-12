@@ -6,6 +6,7 @@ Los requisitos describen comportamiento observable y criterios de aceptación; n
 
 | ID | Requisito | Estado |
 |---|---|---|
-| REQ-001 | [Espacio de trabajo local de proyectos](REQ-001-local-project-workspace.md) | Borrador |
+| REQ-001 | [Espacio de trabajo local de proyectos](REQ-001-local-project-workspace.md) | Aprobado |
+| REQ-002 | [Estado del proyecto desde el repositorio](REQ-002-repository-project-state.md) | Borrador |
 
 Utiliza pnpm run new:requirement -- <slug> para crear el siguiente borrador numerado.

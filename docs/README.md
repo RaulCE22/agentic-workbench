@@ -8,7 +8,7 @@ Empieza por este índice y abre únicamente los documentos necesarios para la ta
 | Hoja de ruta | [Roadmap](product/roadmap.md) | Entregas incrementales y alcance |
 | Requisitos | [Requisitos](requirements/README.md) | Comportamiento y criterios de aceptación |
 | Arquitectura | [Visión general](architecture/overview.md) | Topología local y límites del sistema |
-| Backend | [Servidor local](architecture/backend.md) | API, sistema de archivos, procesos y persistencia |
+| Backend | [Servidor local](architecture/backend.md) | API, sistema de archivos, Git y persistencia local |
 | Frontend | [Frontend](architecture/frontend.md) | Stack y convenciones de interfaz |
 | Runtime | [Runtime](architecture/runtime.md) | Versiones de Node.js y compatibilidad |
 | Monorepo | [Monorepo](architecture/monorepo.md) | Espacios de trabajo y límites de paquetes |

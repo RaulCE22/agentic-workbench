@@ -12,8 +12,8 @@ Responsabilidades:
 - Mantener el registro de proyectos y preferencias locales.
 - Leer archivos y enumerar directorios dentro de raíces autorizadas.
 - Renderizar datos seguros para el visor de documentación.
+- Interpretar la convención documental acordada y devolver una vista derivada del estado del proyecto.
 - Consultar Git y producir resúmenes/diffs.
-- Gestionar procesos CLI y sus flujos de entrada/salida en las fases que lo habiliten.
 - Persistir el registro pequeño de proyectos y preferencias locales.
 
 ## Stack
@@ -25,7 +25,7 @@ Responsabilidades:
 - Archivo JSON local para el registro pequeño de proyectos y preferencias; sin ORM ni servicio de base de datos en V0.1.
 - No se usan eventos asíncronos en V0.1; evaluar SSE cuando exista una vista que necesite recibir actividad en vivo.
 
-No se utiliza PostgreSQL ni Better Auth en la arquitectura inicial: no hay servidor remoto ni usuarios multiusuario. La autenticación de los agentes permanece en sus respectivos CLI.
+No se utiliza PostgreSQL ni Better Auth en la arquitectura inicial: no hay servidor remoto ni usuarios multiusuario. Workbench no ejecuta agentes ni gestiona sus credenciales.
 
 ## Organización propuesta
 
@@ -38,13 +38,12 @@ apps/api/src/
     files/
     documentation/
     features/
+    project-state/         # solo cuando se implemente el lector definido por REQ-002
     git/
-    agents/                # V0.2
     settings/
   infrastructure/
     database/
     filesystem/
-    processes/
   shared/
     errors/
     security/
@@ -64,15 +63,13 @@ No crees carpetas vacías para capas teóricas. Añade cada módulo cuando tenga
 - No lee secretos por defecto; define política explícita para archivos como .env, claves y credenciales.
 - No permite escritura durante V0.1.
 
-## Procesos y Git
-
-Los procesos deben iniciarse mediante APIs de proceso con ejecutable y argumentos separados. No se usa shell: true, interpolación ni comandos arbitrarios proporcionados por el navegador. Cada proceso debe tener directorio de trabajo validado, timeout, límites de stdout/stderr, gestión de señales y registro de código de salida.
+## Git
 
 Git se consulta inicialmente en modo de solo lectura. Las operaciones de escritura se incorporarán por fases y con confirmación explícita.
 
 ## API y eventos
 
-La API se organiza por módulos y contratos Zod. Los eventos asíncronos (por ejemplo, cambios de estado de un agente) pueden transmitirse por SSE. Los eventos de los CLI se conservan con su identificador de proveedor y versión, además de cualquier representación común.
+La API se organiza por módulos y contratos Zod. La vista de estado se deriva de documentos del proyecto y Git, sin persistir una copia de los estados. La actualización se solicita mediante las consultas existentes; no hay un canal de eventos en el alcance actual.
 
 ## Seguridad del servidor local
 

@@ -123,5 +123,5 @@ Las decisiones de persistencia JSON, acceso local, rutas, límites de lectura, G
 
 ## Trazabilidad
 
-- Plan: ../../plans/active/v0-1-project-workspace/plan.md
+- Plan: ../../plans/completed/v0-1-project-workspace/plan.md
 - ADR: ../decisions/ADR-0005-arquitectura-local-first.md

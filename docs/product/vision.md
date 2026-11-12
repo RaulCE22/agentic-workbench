@@ -2,65 +2,60 @@
 
 ## Propósito
 
-Agentic Workbench es un centro de control local para el desarrollo de software asistido por agentes. Reúne en una única aplicación el contexto del proyecto, el ciclo de vida de las funcionalidades, la actividad observable de los agentes y la revisión de cambios.
+Agentic Workbench es un visor local del estado continuo de un proyecto de software. Lee la estructura y documentación del repositorio para reunir en una aplicación la información sobre requisitos, planes, tareas, hitos, roadmap y cambios.
 
 ## Problema
 
-Cuando se utilizan varios CLI y herramientas de programación agéntica, la información queda repartida entre terminales, editores, archivos Markdown, tareas, ramas Git y paneles de cada proveedor. Cuesta responder preguntas básicas:
+El estado de un proyecto suele estar repartido entre documentos, tareas, código y Git. Cuesta responder con rapidez:
 
-- ¿Qué agentes están trabajando ahora y en qué proyecto?
-- ¿Qué tarea o funcionalidad está intentando resolver cada uno?
-- ¿Qué ha hecho realmente y qué herramientas ha utilizado?
-- ¿Qué archivos ha leído o modificado?
-- ¿Está bloqueado esperando permiso o necesita una respuesta?
-- ¿Qué criterios de aceptación siguen pendientes?
-- ¿Qué cambios hay en el repositorio y cómo se relacionan con la funcionalidad?
+- ¿Qué trabajo está en curso y qué plan lo organiza?
+- ¿Qué hitos y tareas se completaron y dónde está registrada su evidencia?
+- ¿Qué viene después según el roadmap del proyecto?
+- ¿Qué cambios hay en el repositorio y cómo se relacionan con el trabajo documentado?
 
-Workbench debe dar una visión coherente de ese trabajo sin sustituir los CLI ni los editores que ya funcionan.
+Workbench presenta estas respuestas a partir de los archivos del repositorio. La información del repositorio es la fuente de verdad; Workbench la organiza y enlaza, sin mantener una copia paralela de su estado.
 
 ## Usuario inicial
 
-Desarrollador individual que trabaja en varios repositorios, utiliza distintos agentes CLI y quiere conservar el control del diseño, el contexto, la ejecución y la revisión. La primera versión prioriza un único usuario y un único equipo local. No se diseña todavía para colaboración multiusuario.
+Desarrollador individual que trabaja en varios repositorios y quiere entender el estado de cada proyecto desde un espacio local. Todos los repositorios que se incorporen seguirán una estructura documental común. Workbench se probará primero con su propio repositorio y después con otro repositorio.
 
 ## Propuesta de valor
 
-Una aplicación local que conecta cuatro vistas del mismo trabajo:
+Una aplicación local que reúne cuatro vistas del mismo proyecto:
 
-1. Proyecto: estructura de código, documentación, diagramas, configuración y estado Git.
-2. Funcionalidad: requisito, plan, tareas, progreso, criterios de aceptación y evidencias.
-3. Agente: proveedor, modelo declarado por el CLI, sesión, mensajes visibles, herramientas, permisos, resultados y archivos afectados.
-4. Cambios: ramas, commits, diferencias, worktrees, revisión y entrega.
+1. Proyecto: estructura, documentación y configuración.
+2. Requisitos y planes: alcance, trabajo en curso, bloqueos y progreso declarado.
+3. Roadmap e hitos: prioridades y trabajo completado según la documentación del repositorio.
+4. Cambios: estado Git y diferencias vinculadas a la evidencia documental disponible.
 
-La unidad principal de trabajo es la funcionalidad o tarea, no la conversación aislada con un modelo. Las sesiones de agentes deben poder vincularse a esa unidad.
+Las vistas deben enlazar a sus archivos de origen y distinguir los datos explícitos de la información ausente o inconsistente. No se infiere que una tarea se completó solo porque hayan cambiado archivos.
 
 ## Principios de producto
 
-- Local-first: el código, la documentación, la base de datos y el historial de trabajo se mantienen en el equipo del usuario.
-- CLI nativos: cada proveedor conserva su autenticación, configuración, permisos, cuotas y modelo.
-- Sin dependencia de un LLM: Workbench no necesita llamar a una API de modelos para funcionar.
-- Observabilidad, no telepatía: se presentan eventos emitidos por las herramientas, salidas, llamadas, permisos y cambios detectables. No se intenta mostrar razonamiento interno privado ni inferir acciones que no hayan ocurrido.
-- Trazabilidad: las acciones del agente se relacionan con proyectos, funcionalidades, sesiones, archivos y commits cuando exista evidencia.
-- Control humano: el usuario puede inspeccionar, pausar, cancelar y aprobar las acciones sensibles.
-- Aislamiento: las tareas concurrentes que escriben código deben ejecutarse en carpetas o worktrees separados.
-- Fuentes abiertas: los requisitos, ADR y planes permanecen como archivos versionables en cada repositorio.
-- Progresividad: primero visibilidad del proyecto; después ejecución y observabilidad de agentes; finalmente automatización y orquestación.
+- Local-first: los repositorios y sus documentos permanecen en el equipo del usuario.
+- Repositorio como fuente de verdad: los estados del proyecto se leen de archivos versionables; no se duplican en una base de datos de Workbench.
+- Lectura progresiva: el usuario puede consultar los documentos originales desde cada vista.
+- Sin dependencia de un LLM: Workbench organiza información declarada y no necesita llamar a una API de modelos.
+- Observabilidad honesta: se muestran los estados y cambios observables; no se inventan tareas, relaciones ni evidencias.
+- Herramientas independientes: los agentes y CLI se utilizan fuera de Workbench. Sus resultados se reflejan en la medida en que queden registrados en el repositorio.
+- Simplicidad: se implementan capacidades que mejoren la lectura del proyecto, no integraciones de proveedores sin una necesidad demostrada.
+- Sin colaboración remota ni telemetría en el alcance local inicial.
 
 ## No es
 
-- No es un IDE ni pretende competir con Cursor, VS Code o Antigravity.
-- No es un agente ni un modelo de lenguaje.
-- No es un sustituto del terminal: los CLI continúan siendo ejecutables desde la terminal.
+- No es un IDE ni pretende competir con editores existentes.
+- No ejecuta ni controla agentes CLI.
+- No sustituye el terminal, Git ni los documentos del proyecto.
 - No es una plataforma cloud ni un servicio multiusuario.
-- No es un sistema de telemetría que envíe código o conversaciones a terceros.
-- No promete registrar eventos que un CLI no exponga.
-- No muestra el razonamiento privado interno del modelo.
+- No conoce actividad que no esté reflejada en los archivos o en Git.
+- No muestra razonamiento privado de modelos ni infiere acciones que no hayan ocurrido.
 
 ## Alcance inicial
 
-La V0.1 permitirá registrar repositorios locales, explorar su estructura, consultar documentos y diagramas, visualizar funcionalidades documentadas y revisar el estado y los diffs de Git en modo de solo lectura. No ejecutará agentes ni modificará archivos.
+La V0.1 permite registrar repositorios, explorar archivos, consultar documentación, visualizar requisitos y planes y revisar Git en modo de solo lectura. Las siguientes versiones enriquecerán la vista del estado continuo a partir de una convención documental compartida y definida antes de implementar su lector.
 
-Las siguientes fases incorporarán los adaptadores de CLI, la gestión de sesiones, el ciclo de vida de funcionalidades, operaciones Git y coordinación de varios agentes.
+Los agentes pueden modificar el repositorio desde herramientas externas. Workbench vuelve a consultar la información cuando se refresca; la actualización automática requiere una decisión y un requisito propios.
 
 ## Criterio de éxito
 
-El usuario puede abrir un proyecto y comprender rápidamente qué contiene, qué funcionalidades están definidas, en qué estado se encuentran y qué cambios Git existen; después puede incorporar agentes sin tener que reorganizar sus repositorios ni renunciar a sus CLI nativos.
+El usuario puede abrir cualquiera de sus repositorios conformes a la estructura acordada y comprender qué trabajo está en curso, qué se completó, qué viene después y qué cambios existen, con enlaces a la información fuente y sin actualizar un estado duplicado en Workbench.

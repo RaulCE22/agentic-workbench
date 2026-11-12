@@ -12,7 +12,7 @@ El usuario inicia un proceso local en su equipo y abre la interfaz en el navegad
 - La base de datos y las preferencias viven en el directorio de datos de usuario del sistema operativo.
 - Los logs locales no deben incluir credenciales ni secretos.
 - No se sincronizan datos con servicios externos.
-- No se almacenan claves API de modelos: cada CLI gestiona su autenticación.
+- Workbench no almacena claves API de modelos ni ejecuta agentes; el usuario puede utilizar CLI externos por separado.
 
 ## Red
 
