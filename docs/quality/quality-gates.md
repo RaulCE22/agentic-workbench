@@ -33,7 +33,7 @@ No añadas scripts ficticios que siempre devuelvan éxito.
 ## Backend
 - Comprobaciones estrictas de TypeScript, lint y formato.
 - Pruebas unitarias de lógica de dominio y aplicación.
-- Pruebas de integración contra PostgreSQL.
+- Pruebas de integración contra el filesystem y Git local; la persistencia de proyectos usa JSON en V0.1.
 - Pruebas de contratos de petición y respuesta.
 - Revisión de migraciones y del proceso de despliegue.
 - Compilación de producción y health check.

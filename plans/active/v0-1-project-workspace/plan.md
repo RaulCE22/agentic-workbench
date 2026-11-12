@@ -1,10 +1,10 @@
 # Plan de implementación: V0.1 — Project Workspace
 
-- Estado: Borrador
+- Estado: Listo para revisión
 - Requisitos: REQ-001
-- ADR relacionados: ADR-0005; ADR-0006 (referencia futura)
+- ADR relacionados: ADR-0005, ADR-0007; ADR-0006 (referencia futura)
 - Riesgo: Alto
-- Aprobación: Pendiente
+- Aprobación: Aprobado por el propietario del proyecto el 2026-11-11
 
 ## Objetivo
 
@@ -32,7 +32,7 @@ Entregar una aplicación web local que permita registrar proyectos, explorar su 
 - Multiusuario, cloud o telemetría.
 - Empaquetado desktop.
 
-## Situación actual
+## Situación de partida
 
 El repositorio hereda la estructura de agentic-engineering. Existen los workspaces apps/web, apps/api y packages/contracts, pero todavía no contienen una aplicación. La plantilla original proponía PostgreSQL, Better Auth y despliegue Hetzner; esas decisiones no aplican a este producto local.
 
@@ -40,14 +40,18 @@ El repositorio hereda la estructura de agentic-engineering. Existen los workspac
 
 - apps/web: SPA React con áreas Project, Documentation, Features y Git.
 - apps/api: servidor Node/Hono, acceso al sistema de archivos, parser documental, consultas Git y persistencia.
-- Persistencia: SQLite local; driver/ORM pendiente de prueba técnica.
+- Persistencia: archivo JSON local en el directorio de datos de Workbench; sin base de datos ni ORM para el registro pequeño de proyectos.
 - Contratos: Zod para los recursos expuestos por API.
 - Comunicación: HTTP para consultas y comandos de lectura; SSE solo cuando exista una actualización asíncrona que lo justifique.
-- Seguridad: loopback, validación de origen, autorización de raíces, resolución segura de rutas y endpoints de solo lectura.
+- Seguridad: loopback, mismo origen sin CORS, validación estricta de Host/Origin, autorización de raíces, resolución segura de rutas y endpoints de lectura más cambios limitados al registro local de Workbench.
+- Enlaces simbólicos que resuelvan fuera de la raíz del proyecto se rechazan.
+- Se excluyen archivos sensibles conocidos y se limitan tamaño, profundidad y volumen.
+- Git se consulta mediante el ejecutable instalado, argumentos separados y sin shell.
+- Se implementan pruebas de unidad e integración para API, filesystem y Git; E2E con navegador queda fuera de V0.1.
 
 ## Fases de implementación
 
-1. Decisiones técnicas y pruebas de concepto: DB-01/02, SEC-01, FS-01/02, GIT-01 y QA-01.
+1. Decisiones aprobadas y registradas en ADR-0007.
 2. Esqueleto ejecutable: scripts de desarrollo, health check, configuración, cierre limpio, SPA y layout.
 3. Registro y exploración: alta/selección, enumeración de directorios, lectura, límites y pruebas traversal/symlink.
 4. Documentación y funcionalidades: visor Markdown/Mermaid, catálogo REQ y enlaces a planes.
@@ -72,18 +76,14 @@ El repositorio hereda la estructura de agentic-engineering. Existen los workspac
 - Acceso local excesivo: limitar operaciones a raíces autorizadas y probar escapes.
 - Markdown no confiable: sanitizar HTML y bloquear cargas remotas automáticas.
 - Git con salidas inesperadas: usar formatos estables, codificación robusta y límites de salida.
-- Dependencias nativas SQLite: validar instalación en macOS Apple Silicon y Linux antes de elegir driver.
+- Persistencia JSON: escribir el archivo de datos de forma segura y mantenerlo fuera de los repositorios gestionados.
 - Procesos/puertos locales: validar Host/Origin y no escuchar en interfaces públicas.
 
 La reversión de la V0.1 consiste en eliminar el directorio de datos de Workbench y desinstalar la aplicación; los repositorios originales no deben verse afectados.
 
 ## Decisiones que requieren aprobación
 
-- Selección del driver y ORM SQLite.
-- Modelo de seguridad de la instancia local.
-- Política de symlinks, exclusiones y archivos sensibles.
-- Estrategia de pruebas E2E.
-- Confirmar si el primer visor muestra todos los archivos de texto o solo código/documentación detectados.
+Ninguna. El visor muestra archivos de texto de hasta 512 KiB, con exclusión de nombres sensibles y archivos binarios.
 
 ## Comandos de verificación
 
@@ -94,7 +94,7 @@ La reversión de la V0.1 consiste en eliminar el directorio de datos de Workbenc
 - Pruebas de integración API + filesystem + Git.
 - Prueba manual en macOS Apple Silicon.
 
-Los comandos aún no existen todos en el repositorio; se incorporarán al crear las aplicaciones.
+Las aplicaciones incorporan scripts de verificación, lint, pruebas y compilación para este alcance.
 
 ## Condiciones de entrega
 

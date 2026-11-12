@@ -7,12 +7,12 @@ Aplicación web servida localmente por un proceso Node.js. El navegador es la in
 ```mermaid
 flowchart TB
   U[Usuario] --> B[Navegador]
-  B <-->|HTTP / SSE| L[Servidor local Hono]
+  B <-->|HTTP mismo origen| L[Servidor local Hono]
   L --> F[Servicio de archivos]
   L --> G[Adaptador Git]
   L --> P[Gestor de procesos]
   P --> C[CLI nativos]
-  L --> D[(SQLite local)]
+  L --> D[Registro JSON local]
   C -->|eventos / stdout / stderr| P
   F --> R[Repositorios autorizados]
   G --> R
@@ -23,7 +23,7 @@ flowchart TB
 - apps/web: SPA React que presenta proyectos, funcionalidades, agentes y Git.
 - apps/api: servidor local Hono sobre Node.js. Valida peticiones, aplica permisos y orquesta servicios locales.
 - packages/contracts: esquemas Zod y tipos compartidos únicamente cuando frontend y backend los necesiten.
-- SQLite: persistencia local de proyectos registrados, preferencias, sesiones y metadatos del Workbench.
+- JSON local: persistencia mínima de proyectos registrados y preferencias en el directorio de datos de Workbench, fuera de los repositorios.
 - CLI nativos: procesos independientes, ejecutados con la configuración y autenticación del proveedor.
 
 ## Límites y dependencias
@@ -47,4 +47,4 @@ Consulta backend.md, quality/security-baseline.md y pending-decisions.md.
 
 ## Estado de las decisiones
 
-La topología local está aceptada en ADR-0005. La selección exacta del driver SQLite, la estrategia de autenticación local y los protocolos definitivos de agentes siguen pendientes de validación técnica.
+La topología local está aceptada en ADR-0005. Las decisiones de persistencia y seguridad de la V0.1 están detalladas en ADR-0007; los protocolos definitivos de agentes siguen pendientes de validación técnica.

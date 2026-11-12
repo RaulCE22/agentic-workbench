@@ -1,8 +1,8 @@
 # Backend local
 
-Directorio reservado para el servidor Node.js + Hono. Todavía no se ha generado código fuente.
+Servidor Node.js + Hono que sirve la SPA y la API desde `127.0.0.1:4173`.
 
-Este backend es el proceso local de confianza que conecta la interfaz con el sistema de archivos, Git, procesos CLI y persistencia SQLite. No es una API remota multiusuario.
+Este backend es el proceso local que conecta la interfaz con el sistema de archivos, Git y el registro JSON de Workbench. No es una API remota multiusuario.
 
 Consulta:
 - docs/architecture/backend.md
@@ -17,5 +17,7 @@ Principios:
 - No ejecutar comandos arbitrarios ni usar shell interpolation.
 - Mantener los módulos de dominio independientes de Hono.
 - Validar entradas con Zod.
-- Persistir solo metadatos propios de Workbench fuera de los repositorios.
+- Persistir solo el registro y preferencias de Workbench en `~/.agentic-workbench/projects.json`, fuera de los repositorios.
 - No implementar escritura de archivos ni operaciones Git mutables en V0.1.
+
+Inicia desde la raíz del monorepo con `pnpm dev`. El comando compila la SPA y el servidor antes de levantar la aplicación local.

@@ -61,6 +61,6 @@ apps/web/src/
 
 ## Pruebas
 
-Utiliza Vitest. Añade Testing Library, user-event y jsdom cuando se preparen las primeras pruebas de componentes. Prueba comportamiento visible para el usuario, validación y transiciones de estado. Elige una herramienta E2E al implementar el primer recorrido crítico completo.
+Utiliza Vitest. Añade Testing Library y user-event cuando se preparen las primeras pruebas de componentes. Prueba comportamiento visible para el usuario, validación y transiciones de estado. En V0.1 se cubre la sanitización Markdown y la API sin añadir una herramienta E2E de navegador.
 
 Las versiones exactas de los paquetes se seleccionarán al crear la aplicación y quedarán registradas en el lockfile.

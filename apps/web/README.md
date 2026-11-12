@@ -1,6 +1,6 @@
 # Aplicación web
 
-Directorio reservado para la SPA React + Vite + TypeScript. El stack frontend está definido en docs/architecture/frontend.md y ADR-0002. Todavía no se ha generado código fuente.
+SPA React + Vite + TypeScript. El servidor local entrega el bundle compilado junto con la API desde el mismo origen.
 
 Áreas iniciales:
 - Project Workspace.
@@ -17,3 +17,5 @@ Al preparar la aplicación:
 - Utiliza Zustand únicamente para estado compartido de cliente.
 - Configura Vitest y pruebas de componentes.
 - No accedas directamente desde el navegador a rutas del sistema ni a procesos.
+
+La SPA usa React Router para las áreas, TanStack Query para los datos de API y DOMPurify para sanear Markdown. Mermaid se renderiza en modo estricto y las imágenes remotas de Markdown se bloquean.

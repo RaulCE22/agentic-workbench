@@ -1,9 +1,9 @@
 # REQ-001: Espacio de trabajo local de proyectos
 
-- Estado: Borrador
+- Estado: Aprobado
 - Prioridad: Alta
 - Responsable: Propietario del proyecto
-- ADR relacionados: ADR-0005
+- ADR relacionados: ADR-0005, ADR-0007
 
 ## Propósito
 
@@ -76,7 +76,7 @@ El usuario puede refrescar la información del proyecto y detectar cambios reali
 ## Requisitos no funcionales y de seguridad
 
 - El backend escucha solo en loopback.
-- Las peticiones del navegador se validan por origen y sesión local.
+- Las peticiones del navegador se validan por Host y Origin exactos; el servidor acepta únicamente su origen local.
 - Las rutas se canonicalizan y se comprueban tras resolver enlaces simbólicos.
 - Se aplican límites de tamaño, profundidad y volumen en exploración y lectura.
 - Los endpoints de V0.1 no escriben en los proyectos.
@@ -111,14 +111,9 @@ Dada cualquier consulta disponible en la V0.1, cuando se ejecuta, entonces no ca
 ### REQ-001-AC-08 — Mantener los datos locales
 Dado un proyecto registrado, cuando se reinicia Workbench, entonces se conserva su registro sin copiar sus archivos a otro directorio ni transmitirlos fuera del equipo.
 
-## Dependencias y preguntas abiertas
+## Decisiones técnicas
 
-- Driver SQLite y ORM (DB-01, DB-02).
-- Seguridad de la sesión/origen local (SEC-01).
-- Alta de proyectos y tratamiento de symlinks (FS-01).
-- Política de lectura de archivos sensibles y límites (FS-02).
-- Integración Git mediante CLI o librería (GIT-01).
-- Herramienta E2E para el flujo completo (QA-01).
+Las decisiones de persistencia JSON, acceso local, rutas, límites de lectura, Git y pruebas de V0.1 están aprobadas en [ADR-0007](../decisions/ADR-0007-v0-1-seguridad-y-persistencia-local.md). La implementación aplica límites conservadores y no habilita acceso remoto.
 
 ## Trazabilidad
 

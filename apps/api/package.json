@@ -1,0 +1,22 @@
+{
+  "name": "@agentic-workbench/api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node dist/main.js",
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run --exclude dist"
+  },
+  "dependencies": {
+    "@agentic-workbench/contracts": "workspace:*",
+    "@hono/node-server": "2.1.7",
+    "hono": "4.13.18"
+  },
+  "devDependencies": {
+    "@types/node": "26.6.6",
+    "typescript": "5.9.3",
+    "vitest": "5.1.0"
+  }
+}

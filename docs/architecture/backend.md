@@ -14,7 +14,7 @@ Responsabilidades:
 - Renderizar datos seguros para el visor de documentación.
 - Consultar Git y producir resúmenes/diffs.
 - Gestionar procesos CLI y sus flujos de entrada/salida en las fases que lo habiliten.
-- Persistir metadatos, sesiones y eventos locales.
+- Persistir el registro pequeño de proyectos y preferencias locales.
 
 ## Stack
 
@@ -22,8 +22,8 @@ Responsabilidades:
 - Hono con adaptador Node.
 - TypeScript estricto.
 - Zod para validar entradas y salidas en límites de confianza.
-- SQLite como persistencia local prevista; ORM y driver pendientes.
-- Server-Sent Events (SSE) como primera opción para transmitir actividad del backend a la SPA; confirmar en prueba técnica.
+- Archivo JSON local para el registro pequeño de proyectos y preferencias; sin ORM ni servicio de base de datos en V0.1.
+- No se usan eventos asíncronos en V0.1; evaluar SSE cuando exista una vista que necesite recibir actividad en vivo.
 
 No se utiliza PostgreSQL ni Better Auth en la arquitectura inicial: no hay servidor remoto ni usuarios multiusuario. La autenticación de los agentes permanece en sus respectivos CLI.
 
@@ -79,12 +79,12 @@ La API se organiza por módulos y contratos Zod. Los eventos asíncronos (por ej
 La instancia debe:
 - Escuchar únicamente en 127.0.0.1 o ::1.
 - Rechazar encabezados Host y orígenes no permitidos.
-- Proteger operaciones mutables frente a CSRF y DNS rebinding.
-- Usar un mecanismo de sesión local no reutilizable entre instancias; la solución exacta queda pendiente de ADR.
+- Rechazar peticiones de otros orígenes y validar Host para reducir CSRF y DNS rebinding en el servidor local.
+- Para V0.1, limitar acceso a loopback, Host/Origin exactos y mismo origen; sin CORS ni autenticación multiusuario.
 - Evitar CORS abierto.
 - No exponer consola de depuración ni endpoints de administración.
 - Mantener logs locales sin credenciales ni secretos.
 
 ## Persistencia
 
-Se prevé una base SQLite en el directorio de datos de usuario del sistema operativo, fuera del repositorio gestionado. Los archivos de código y documentación siguen perteneciendo a cada proyecto y no se copian a la base de datos. La selección de driver, ORM, migraciones y política de backup requiere una prueba técnica antes de implementarse.
+El registro JSON se guarda en el directorio de datos de usuario de Workbench, fuera de los repositorios gestionados. Los archivos de código y documentación siguen en su ubicación original y no se copian al registro.

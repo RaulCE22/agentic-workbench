@@ -29,7 +29,7 @@ No pretende ser otro IDE, un proveedor de modelos ni una plataforma cloud. Los e
 
 ## Estado actual
 
-El repositorio parte de la base de ingeniería agentic-engineering. Esta primera etapa adapta la documentación al producto y define el alcance de la V0.1. Todavía no contiene una aplicación ejecutable.
+La V0.1 implementa el espacio de trabajo local de proyectos. Las capacidades de agentes CLI quedan para V0.2.
 
 ## Hoja de ruta
 
@@ -47,7 +47,7 @@ Consulta la visión del producto y la hoja de ruta en docs/product/.
 
 - Frontend: React, Vite, TypeScript, React Router, TanStack Query, shadcn/ui y Tailwind CSS.
 - Backend local: Node.js y Hono.
-- Persistencia local: SQLite; la elección del driver y del ORM se cerrará tras una prueba técnica.
+- Persistencia local: JSON con proyectos y preferencias en el directorio de datos del usuario; sin base de datos externa.
 - Contratos: Zod en los límites entre frontend y backend.
 - Integración de agentes: adaptadores por CLI; ACP cuando esté disponible, protocolo específico cuando no lo esté.
 - Git y procesos del sistema: invocados únicamente desde el backend local con argumentos validados.
@@ -83,12 +83,12 @@ Las integraciones están sujetas a validación con las versiones instaladas. Con
 Requisitos: Node.js 24 (24.15.0) y pnpm 10 (10.28.2). Consulta docs/architecture/runtime.md.
 
 ```bash
-npm install --global pnpm@10.28.2
 pnpm install
 pnpm run verify
+pnpm dev
 ```
 
-La aplicación aún no tiene comandos de ejecución. Se añadirán al implementar la V0.1.
+`pnpm dev` compila las aplicaciones y levanta Workbench en `http://127.0.0.1:4173`. Para comprobar cambios, ejecuta `pnpm run typecheck`, `pnpm run test` y `pnpm run build`.
 
 ## Privacidad y seguridad
 
