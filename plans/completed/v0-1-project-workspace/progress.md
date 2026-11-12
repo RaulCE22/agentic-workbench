@@ -6,7 +6,7 @@
 
 ## Estado actual
 
-Listo para revisión. Las áreas funcionales y las pruebas automatizadas están implementadas. El smoke test HTTP pasó al ejecutar el servidor con permisos de loopback; la revisión visual en navegador queda pendiente.
+Completado. Las áreas funcionales y las pruebas automatizadas están implementadas. El smoke test HTTP pasó al ejecutar el servidor con permisos de loopback y el propietario confirmó que la revisión visual funciona correctamente.
 
 ## Trabajo completado
 
@@ -36,7 +36,7 @@ Listo para revisión. Las áreas funcionales y las pruebas automatizadas están 
 | `node apps/api/dist/main.js` | Correcto con permisos de loopback | Inició en `127.0.0.1:4173`; se detuvo al terminar las peticiones. |
 | `curl -fsS http://127.0.0.1:4173/api/health` | Correcto | Respondió `{"status":"ok"}`. |
 | `curl -fsS http://127.0.0.1:4173/` | Correcto | Sirvió `index.html` del bundle compilado. |
-| Revisión visual en navegador | No ejecutada | Falta comprobar visualmente el flujo desde el navegador. |
+| Revisión visual en navegador | Correcto según el propietario | El propietario comprobó el flujo y confirmó que funciona según lo indicado. |
 
 ## Decisiones y descubrimientos
 
@@ -47,8 +47,8 @@ Listo para revisión. Las áreas funcionales y las pruebas automatizadas están 
 
 ## Preguntas abiertas / bloqueos
 
-- Ninguna decisión técnica pendiente para V0.1. Solo falta la inspección visual del flujo en navegador.
+- No quedan decisiones ni comprobaciones pendientes para el alcance V0.1.
 
 ## Siguiente paso
 
-Abrir `http://127.0.0.1:4173` con `pnpm dev` para la inspección visual final.
+Plan completado; cualquier mejora posterior se gestiona en su propio plan.

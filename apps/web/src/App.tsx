@@ -156,10 +156,80 @@ function FilePreview({ project, filePath }: { project: Project; filePath: string
 }
 
 function DocumentationPage({ project, initialPath, onPath }: { project: Project; initialPath: string; onPath: (path: string) => void }) {
+  const [search, setSearch] = useState("");
+  const [expandedFolders, setExpandedFolders] = useState<Set<string>>(() => new Set(["docs", "plans"]));
   const documents = useQuery({ queryKey: ["documents", project.id], queryFn: () => api.documents(project.id) });
   const selectedPath = initialPath || documents.data?.[0]?.path || "";
   const file = useQuery({ queryKey: ["file", project.id, selectedPath], queryFn: () => api.file(project.id, selectedPath), enabled: !!selectedPath });
-  return <div className="page-content split-browser docs-browser"><section className="panel docs-list-panel"><PanelHeading title="DOCUMENTACIÓN" /><p className="subtle-copy">Markdown dentro de docs/ y plans/</p>{documents.data?.map((document) => <button key={document.path} className={`doc-item ${selectedPath === document.path ? "selected" : ""}`} onClick={() => onPath(document.path)}><span className="doc-item-icon">▤</span><span><b>{document.title}</b><small>{document.path}</small></span></button>)}{documents.data?.length === 0 && <div className="empty-inline">No se encontraron documentos Markdown.</div>}</section><section className="panel doc-content-panel">{file.data ? <><div className="file-preview-heading"><div><span className="doc-item-icon">▤</span><b>{file.data.path}</b></div><span>MARKDOWN</span></div><div className="markdown-scroll"><MarkdownView content={file.data.content} currentPath={selectedPath} onNavigate={onPath} /></div></> : file.isLoading ? <div className="loading-state">Cargando documento…</div> : file.error ? <div className="inline-error">{(file.error as Error).message}</div> : <div className="file-placeholder"><div>▤</div><b>Elige un documento</b></div>}</section></div>;
+  const query = search.trim();
+  const tree = buildDocumentationTree(documents.data ?? [], query);
+  const toggleFolder = (path: string) => setExpandedFolders((current) => {
+    const next = new Set(current);
+    if (next.has(path)) next.delete(path); else next.add(path);
+    return next;
+  });
+  return <div className="page-content split-browser docs-browser">
+    <section className="panel docs-list-panel">
+      <PanelHeading title="DOCUMENTACIÓN" />
+      <p className="subtle-copy">Markdown dentro de docs/ y plans/</p>
+      <label className="docs-search"><span aria-hidden="true">⌕</span><input type="search" value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Buscar por título o ruta" aria-label="Buscar documentación por título o ruta" /></label>
+      <div className="docs-tree" aria-label="Documentos por carpeta">
+        {documents.isLoading && <div className="empty-inline">Cargando documentos…</div>}
+        {documents.error && <div className="inline-error">{(documents.error as Error).message}</div>}
+        {!documents.isLoading && !documents.error && documents.data?.length === 0 && <div className="empty-inline">No se encontraron documentos Markdown.</div>}
+        {!documents.isLoading && !documents.error && query && tree.length === 0 && <div className="empty-inline">No hay documentos que coincidan con «{query}».</div>}
+        {tree.map((folder) => <DocumentationFolder key={folder.path} folder={folder} depth={0} selectedPath={selectedPath} expandedFolders={expandedFolders} searching={!!query} onToggle={toggleFolder} onSelect={onPath} />)}
+      </div>
+    </section>
+    <section className="panel doc-content-panel">{file.data ? <><div className="file-preview-heading"><div><span className="doc-item-icon">▤</span><b>{file.data.path}</b></div><span>MARKDOWN</span></div><div className="markdown-scroll"><MarkdownView content={file.data.content} currentPath={selectedPath} onNavigate={onPath} /></div></> : file.isLoading ? <div className="loading-state">Cargando documento…</div> : file.error ? <div className="inline-error">{(file.error as Error).message}</div> : <div className="file-placeholder"><div>▤</div><b>Elige un documento</b></div>}</section>
+  </div>;
+}
+
+type DocumentationItem = { path: string; title: string };
+type DocumentationFolderNode = { path: string; name: string; folders: DocumentationFolderNode[]; documents: DocumentationItem[] };
+
+function buildDocumentationTree(documents: DocumentationItem[], search: string): DocumentationFolderNode[] {
+  const roots: DocumentationFolderNode[] = [];
+  for (const rootName of ["docs", "plans"]) {
+    const root: DocumentationFolderNode = { path: rootName, name: rootName, folders: [], documents: [] };
+    for (const document of documents) {
+      if (!document.path.startsWith(`${rootName}/`)) continue;
+      if (search && !`${document.title} ${document.path}`.toLocaleLowerCase().includes(search.toLocaleLowerCase())) continue;
+      const segments = document.path.split("/").filter(Boolean);
+      let folder = root;
+      for (const segment of segments.slice(1, -1)) {
+        const folderPath = `${folder.path}/${segment}`;
+        let child = folder.folders.find((item) => item.path === folderPath);
+        if (!child) {
+          child = { path: folderPath, name: segment, folders: [], documents: [] };
+          folder.folders.push(child);
+        }
+        folder = child;
+      }
+      folder.documents.push(document);
+    }
+    if (root.documents.length || root.folders.length) roots.push(root);
+  }
+  return roots;
+}
+
+function DocumentationFolder({ folder, depth, selectedPath, expandedFolders, searching, onToggle, onSelect }: {
+  folder: DocumentationFolderNode;
+  depth: number;
+  selectedPath: string;
+  expandedFolders: Set<string>;
+  searching: boolean;
+  onToggle: (path: string) => void;
+  onSelect: (path: string) => void;
+}) {
+  const open = searching || expandedFolders.has(folder.path);
+  return <div className="docs-tree-branch">
+    <button className={`tree-node directory-node ${open ? "open" : ""}`} style={{ paddingLeft: `${12 + depth * 15}px` }} aria-expanded={open} onClick={() => onToggle(folder.path)}><span className="chevron" aria-hidden="true">{open ? "⌄" : "›"}</span><span className="folder-symbol" aria-hidden="true">▰</span><span>{folder.name}</span></button>
+    {open && <div>
+      {folder.folders.map((child) => <DocumentationFolder key={child.path} folder={child} depth={depth + 1} selectedPath={selectedPath} expandedFolders={expandedFolders} searching={searching} onToggle={onToggle} onSelect={onSelect} />)}
+      {folder.documents.map((document) => <button key={document.path} className={`tree-node file-node ${selectedPath === document.path ? "selected" : ""}`} style={{ paddingLeft: `${30 + depth * 15}px` }} title={document.path} onClick={() => onSelect(document.path)}><span className="file-symbol" aria-hidden="true">M</span><span>{document.title}</span></button>)}
+    </div>}
+  </div>;
 }
 
 function FeaturesPage({ project, onOpen }: { project: Project; onOpen: (path: string) => void }) {

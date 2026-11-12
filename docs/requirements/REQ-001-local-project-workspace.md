@@ -111,6 +111,12 @@ Dada cualquier consulta disponible en la V0.1, cuando se ejecuta, entonces no ca
 ### REQ-001-AC-08 — Mantener los datos locales
 Dado un proyecto registrado, cuando se reinicia Workbench, entonces se conserva su registro sin copiar sus archivos a otro directorio ni transmitirlos fuera del equipo.
 
+### REQ-001-AC-09 — Navegar la documentación en árbol
+Dado un proyecto con documentos Markdown dentro de `docs/` y `plans/`, cuando el usuario abre Documentación, entonces ve los documentos organizados por carpeta y puede desplegar o contraer carpetas. Cuando selecciona un documento, se muestra en el visor.
+
+### REQ-001-AC-10 — Buscar documentación
+Dado un proyecto con documentos Markdown dentro de `docs/` y `plans/`, cuando el usuario introduce una consulta en el buscador de Documentación, entonces se muestran los documentos cuyo título o ruta coincide con la consulta, sin buscar en el contenido. Cuando borra la consulta, vuelve a mostrarse el árbol completo.
+
 ## Decisiones técnicas
 
 Las decisiones de persistencia JSON, acceso local, rutas, límites de lectura, Git y pruebas de V0.1 están aprobadas en [ADR-0007](../decisions/ADR-0007-v0-1-seguridad-y-persistencia-local.md). La implementación aplica límites conservadores y no habilita acceso remoto.
