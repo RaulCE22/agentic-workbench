@@ -19,7 +19,7 @@ Empieza por este índice y abre únicamente los documentos necesarios para la ta
 | Flujo de trabajo | [Ciclo de funcionalidades](workflows/feature-lifecycle.md) | Análisis, planificación, implementación y revisión |
 | Contexto | [Gestión del contexto](workflows/context-management.md) | Carga progresiva de información |
 | Plantillas | [Plantillas](templates/) | Requisitos, ADR, planes y revisiones |
-| Planes | [Planes de trabajo](../plans/README.md) | Trabajo activo y completado |
+| Planes | [Planes de trabajo](plans/README.md) | Trabajo activo y completado |
 
 ## Jerarquía documental
 

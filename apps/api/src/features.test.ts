@@ -15,11 +15,11 @@ describe("catálogo de requisitos", () => {
     temporaryDirectory = await mkdtemp(path.join(os.tmpdir(), "workbench-features-"));
     const projectPath = path.join(temporaryDirectory, "project");
     await mkdir(path.join(projectPath, "docs", "requirements"), { recursive: true });
-    await mkdir(path.join(projectPath, "plans", "active", "sample"), { recursive: true });
-    await mkdir(path.join(projectPath, "plans", "active", "unrelated"), { recursive: true });
+    await mkdir(path.join(projectPath, "docs", "plans", "active", "sample"), { recursive: true });
+    await mkdir(path.join(projectPath, "docs", "plans", "active", "unrelated"), { recursive: true });
     await writeFile(path.join(projectPath, "docs", "requirements", "REQ-001-sample.md"), "# REQ-001: Requisito de prueba\n\n- Estado: Aprobado\n- Prioridad: Alta\n");
-    await writeFile(path.join(projectPath, "plans", "active", "sample", "plan.md"), "# Plan de muestra\n\nRequisitos: REQ-001\n");
-    await writeFile(path.join(projectPath, "plans", "active", "unrelated", "plan.md"), "# Plan no relacionado\n\nRequisito: REQ-0010\n");
+    await writeFile(path.join(projectPath, "docs", "plans", "active", "sample", "plan.md"), "# Plan de muestra\n\nRequisitos: REQ-001\n");
+    await writeFile(path.join(projectPath, "docs", "plans", "active", "unrelated", "plan.md"), "# Plan no relacionado\n\nRequisito: REQ-0010\n");
     process.env.WORKBENCH_DATA_DIR = path.join(temporaryDirectory, "workbench-data");
     vi.resetModules();
     const { app } = await import("./app.js");
@@ -31,7 +31,7 @@ describe("catálogo de requisitos", () => {
     expect(response.status).toBe(200);
     expect(await response.json()).toEqual([{
       id: "REQ-001", title: "Requisito de prueba", status: "Aprobado", priority: "Alta",
-      path: "docs/requirements/REQ-001-sample.md", plans: ["plans/active/sample/plan.md"],
+      path: "docs/requirements/REQ-001-sample.md", plans: ["docs/plans/active/sample/plan.md"],
     }]);
   });
 });

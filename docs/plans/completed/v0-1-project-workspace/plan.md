@@ -49,14 +49,16 @@ El repositorio hereda la estructura de agentic-engineering. Existen los workspac
 - Git se consulta mediante el ejecutable instalado, argumentos separados y sin shell.
 - Se implementan pruebas de unidad e integración para API, filesystem y Git; E2E con navegador queda fuera de V0.1.
 
-## Fases de implementación
+## Tareas
 
-1. Decisiones aprobadas y registradas en ADR-0007.
-2. Esqueleto ejecutable: scripts de desarrollo, health check, configuración, cierre limpio, SPA y layout.
-3. Registro y exploración: alta/selección, enumeración de directorios, lectura, límites y pruebas traversal/symlink.
-4. Documentación y funcionalidades: visor Markdown/Mermaid, catálogo REQ y enlaces a planes.
-5. Git de solo lectura: estado, rama, archivos modificados, diff y pruebas de ausencia de mutaciones.
-6. Cierre: accesibilidad, errores, estados vacíos, rendimiento, pruebas y revisión independiente.
+| Tarea | Estado | Criterios relacionados |
+|---|---|---|
+| Acordar seguridad y persistencia local en ADR-0007 | Completada | REQ-001-AC-01 a REQ-001-AC-08 |
+| Construir el esqueleto ejecutable con SPA y API local | Completada | REQ-001-AC-01 |
+| Implementar registro, exploración y lectura segura de proyectos | Completada | REQ-001-AC-01 a REQ-001-AC-04 |
+| Implementar documentación, Mermaid, catálogo de requisitos y enlaces a planes | Completada | REQ-001-AC-05 |
+| Implementar Git de solo lectura | Completada | REQ-001-AC-06, REQ-001-AC-07 |
+| Completar accesibilidad, errores, estados vacíos, pruebas y revisión | Completada | REQ-001-AC-08 |
 
 ## Criterios de aceptación y relación con pruebas
 

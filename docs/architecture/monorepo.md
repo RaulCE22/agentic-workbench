@@ -5,18 +5,39 @@
 ```text
 apps/
   web/                 # Aplicación de navegador React + Vite
-  api/                 # API Node.js + Hono (propuesta)
+  api/                 # API local Node.js + Hono
 
 packages/
   contracts/           # Contratos de transporte Zod compartidos
   (futuros paquetes)   # Añadir solo cuando exista reutilización real
 
-docs/                  # Producto, arquitectura, requisitos, ADR y calidad
+docs/                  # Producto, arquitectura, requisitos, ADR, calidad y planes
 .agents/skills/        # Skills independientes del proveedor
 scripts/engineering/   # Utilidades deterministas de ingeniería
 infra/                 # Docker, Dockge, Traefik y Cloudflare
-plans/                 # Planes activos y completados
 ```
+
+## Estructura de documentación
+
+La documentación del proyecto, incluidos los planes activos y completados, se mantiene bajo `docs/`:
+
+```text
+docs/
+  README.md
+  agents/
+  architecture/
+  decisions/
+  plans/
+    active/
+    completed/
+  product/
+  quality/
+  requirements/
+  templates/
+  workflows/
+```
+
+Los README e instrucciones que las herramientas requieren en la raíz o junto a un paquete permanecen fuera de `docs/` como referencias locales breves. Los documentos canónicos y planes se mantienen bajo `docs/`.
 
 ## Reglas del monorepo
 - Utiliza pnpm workspaces. No añadas Turborepo hasta que el tiempo de ejecución de tareas o el grafo de dependencias lo justifiquen.

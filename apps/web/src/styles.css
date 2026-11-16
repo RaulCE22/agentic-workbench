@@ -1456,3 +1456,144 @@ button{
 .plan-link:hover{
   background:#2b3828
 }
+.project-state-page{
+  display:grid;
+  gap:16px
+}
+.text-action,.state-links button,.state-source-link,.state-issue button{
+  border:0;
+  background:transparent;
+  color:#b9d994;
+  cursor:pointer;
+  font:inherit
+}
+.text-action:hover,.state-links button:hover,.state-source-link:hover,.state-issue button:hover{
+  color:#e0f3c3
+}
+.milestone-card{
+  padding:20px;
+  display:grid;
+  gap:14px
+}
+.milestone-heading,.state-plan-heading{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px
+}
+.milestone-heading h2{
+  margin:5px 0 0;
+  font-size:18px;
+  color:#eef1e7
+}
+.milestone-objective{
+  margin:0;
+  color:#a4aa9d;
+  font-size:13px;
+  line-height:1.6
+}
+.state-chip{
+  display:inline-flex;
+  align-items:center;
+  width:max-content;
+  border:1px solid #3a4137;
+  border-radius:999px;
+  padding:4px 9px;
+  color:#bbc1b4;
+  background:#252a23;
+  font-size:10px;
+  white-space:nowrap
+}
+.state-chip.complete{
+  color:#c6e6a0;
+  border-color:#40543b;
+  background:#263326
+}
+.state-chip.active{
+  color:#a9d3e8;
+  border-color:#38505a;
+  background:#222f35
+}
+.state-chip.blocked{
+  color:#f0b4a7;
+  border-color:#63433b;
+  background:#332623
+}
+.state-links{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px
+}
+.state-links button,.state-source-link{
+  padding:5px 0;
+  font-size:11px;
+  text-align:left
+}
+.state-plans{
+  display:grid;
+  gap:10px
+}
+.state-plan{
+  border:1px solid #32372f;
+  border-radius:12px;
+  padding:12px;
+  background:#1e221d
+}
+.state-plan-heading{
+  margin-bottom:8px
+}
+.state-task-list{
+  list-style:none;
+  padding:0;
+  margin:4px 0 0;
+  display:grid
+}
+.state-task-list li{
+  min-height:38px;
+  display:flex;
+  align-items:center;
+  gap:9px;
+  border-top:1px solid #2d322b;
+  font-size:11px
+}
+.state-task-title{
+  flex:1;
+  color:#d1d4ca
+}
+.state-task-requirement{
+  color:#8e9b80;
+  font-size:9px
+}
+.state-task-source{
+  border:0;
+  background:transparent;
+  color:#b9d994;
+  cursor:pointer;
+  font-size:12px
+}
+.state-issue{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  border:1px solid #594b30;
+  border-radius:9px;
+  padding:8px 10px;
+  color:#e3c98f;
+  background:#2d291f;
+  font-size:11px
+}
+.state-issue.contradiction{
+  color:#f0b4a7;
+  border-color:#63433b;
+  background:#332623
+}
+.state-issue button{
+  margin-left:auto;
+  white-space:nowrap;
+  font-size:10px
+}
+@media(max-width:650px){
+  .milestone-card{padding:14px}
+  .milestone-heading h2{font-size:16px}
+  .state-task-list li{flex-wrap:wrap;padding:7px 0}
+}

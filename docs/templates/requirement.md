@@ -5,6 +5,8 @@
 - Responsable: <responsable>
 - ADR relacionados: <IDs o ninguno>
 
+Estados del requisito: Borrador | Aprobado | Retirado. Este estado describe la aprobación del requisito, no el progreso de implementación.
+
 ## Propósito
 ¿Qué problema de usuario o negocio resuelve este requisito?
 

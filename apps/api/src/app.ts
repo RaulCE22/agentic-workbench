@@ -3,16 +3,17 @@ import { serveStatic } from "@hono/node-server/serve-static";
 import { readFile, stat } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { DocumentSchema, GitStatusSchema, ProjectInputSchema, RequirementListSchema, FileEntrySchema, FileContentSchema, type Project } from "@agentic-workbench/contracts";
+import { GitStatusSchema, ProjectInputSchema, ProjectStateSchema, RequirementListSchema, FileEntrySchema, FileContentSchema } from "@agentic-workbench/contracts";
 import { listDirectory, readProjectFile } from "./files.js";
+import { listMarkdown } from "./documents.js";
 import { getGitStatus } from "./git.js";
+import { readProjectState } from "./project-state.js";
 import { addProject, getProject, listProjects, removeProject, selectProject } from "./store.js";
 
 const app = new Hono();
 const port = Number(process.env.PORT ?? 4173);
 const origin = `http://127.0.0.1:${port}`;
 const host = `127.0.0.1:${port}`;
-const excludedMarkdownDirs = new Set([".git", "node_modules", "dist", "build", ".next", ".turbo", "coverage"]);
 
 app.use("*", async (context, next) => {
   context.header("X-Content-Type-Options", "nosniff");
@@ -74,12 +75,18 @@ app.get("/api/projects/:id/documents", async (context) => {
     return context.json(await listMarkdown(project));
   } catch (error) { return context.json({ error: message(error) }, 400); }
 });
+app.get("/api/projects/:id/state", async (context) => {
+  try {
+    const project = await getProject(context.req.param("id"));
+    return context.json(ProjectStateSchema.parse(await readProjectState(project, await listMarkdown(project))));
+  } catch (error) { return context.json({ error: message(error) }, 400); }
+});
 app.get("/api/projects/:id/features", async (context) => {
   try {
     const project = await getProject(context.req.param("id"));
     const documents = await listMarkdown(project);
     const requirements: Array<{ id: string; title: string; status: string; priority?: string; path: string; plans: string[] }> = [];
-    const planDocuments = documents.filter((document) => document.path.startsWith("plans/"));
+    const planDocuments = documents.filter((document) => document.path.startsWith("docs/plans/"));
     const relatedPlans = new Map<string, string[]>();
     for (const plan of planDocuments) {
       const planFile = await readProjectFile(project, plan.path).catch(() => null);
@@ -122,32 +129,6 @@ app.onError((error, context) => {
   console.error("Error en petición local:", error.name);
   return context.json({ error: "No se pudo completar la petición." }, 500);
 });
-
-async function listMarkdown(project: Project) {
-  const result: Array<{ path: string; title: string }> = [];
-  let scannedEntries = 0;
-  async function walk(relativeDirectory: string, depth: number): Promise<void> {
-    if (depth > 6 || result.length >= 300 || scannedEntries >= 1000) return;
-    const entries = await listDirectory(project, relativeDirectory || ".").catch(() => []);
-    for (const entry of entries) {
-      scannedEntries += 1;
-      if (result.length >= 300 || scannedEntries >= 1000) break;
-      if (entry.kind === "directory" && excludedMarkdownDirs.has(entry.name)) continue;
-      const child = entry.path;
-      if (entry.kind === "directory") await walk(child, depth + 1);
-      else if (entry.name.toLowerCase().endsWith(".md")) {
-        const document = await readProjectFile(project, child).catch(() => null);
-        if (document) {
-          const heading = document.content.match(/^#\s+(.+)$/m)?.[1]?.trim();
-          result.push(DocumentSchema.parse({ path: child, title: heading || entry.name.replace(/\.md$/i, "") }));
-        }
-      }
-    }
-  }
-  await walk("docs", 0);
-  await walk("plans", 0);
-  return result.sort((a, b) => a.path.localeCompare(b.path));
-}
 
 function message(error: unknown): string {
   if (error instanceof Error && "code" in error) return "No se pudo acceder al recurso local solicitado.";

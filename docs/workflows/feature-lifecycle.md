@@ -17,7 +17,7 @@ Es obligatoria para cambios entre módulos, esquemas de datos, contratos públic
 
 El plan debe incluir objetivo, alcance y exclusiones, módulos responsables, áreas que se modificarán, fases ordenadas, relación entre criterios de aceptación y pruebas, riesgos, migraciones, rollback y puntos de aprobación.
 
-Resultado: plans/active/<slug>/plan.md.
+Resultado: docs/plans/active/<slug>/plan.md.
 
 ## 3. Aprobación
 Se requiere aprobación humana para comportamientos de producto no resueltos, cambios de arquitectura aceptada, tareas sensibles de seguridad, operaciones destructivas de base de datos y cambios de infraestructura de producción.

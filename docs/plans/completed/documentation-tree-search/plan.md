@@ -11,18 +11,18 @@ Mejorar la vista Documentación con navegación de documentos Markdown por carpe
 
 ## Alcance
 ### Incluye
-- Mostrar en forma de árbol los documentos Markdown que el catálogo existente encuentra en `docs/` y `plans/`.
+- Mostrar en forma de árbol los documentos Markdown que el catálogo existente encuentra bajo `docs/`.
 - Permitir desplegar y contraer carpetas y seleccionar documentos para abrirlos en el visor existente.
 - Filtrar documentos por coincidencias de consulta en su título o ruta, sin buscar en el contenido.
 - Al limpiar la consulta, restaurar la navegación completa del árbol.
 
 ### No incluye
 - Búsqueda en el contenido de los documentos, indexación o cambios al endpoint/catálogo de la API.
-- Documentos fuera de `docs/` y `plans/`, formatos distintos de Markdown o cambios al renderizado Markdown.
+- Documentos fuera de `docs/`, formatos distintos de Markdown o cambios al renderizado Markdown.
 - Edición, creación, movimiento o eliminación de documentos.
 
 ## Situación actual
-La API `GET /api/projects/:id/documents` ya enumera documentos Markdown bajo `docs/` y `plans/` y devuelve `path` y `title`, con límites de profundidad y volumen. `DocumentationPage` en `apps/web/src/App.tsx` presenta actualmente una lista plana y usa el endpoint de lectura existente para cargar el documento seleccionado. El API tipado y sus esquemas están en `apps/web/src/api.ts` y `packages/contracts`.
+La API `GET /api/projects/:id/documents` enumera documentos Markdown bajo `docs/` y devuelve `path` y `title`, con límites de profundidad y volumen. `DocumentationPage` en `apps/web/src/App.tsx` presenta un árbol con búsqueda y usa el endpoint de lectura existente para cargar el documento seleccionado. El API tipado y sus esquemas están en `apps/web/src/api.ts` y `packages/contracts`.
 
 ## Diseño propuesto
 Mantener el catálogo remoto en TanStack Query. Construir en la vista de Documentación la jerarquía de carpetas a partir de las rutas ya recibidas; mantener en estado local la consulta y las carpetas desplegadas. Filtrar los metadatos de título y ruta en el cliente y pasar la ruta seleccionada al mecanismo actual de lectura. No se requiere cambio de contrato ni acceso nuevo al sistema de archivos.
@@ -33,11 +33,14 @@ Mantener el catálogo remoto en TanStack Query. Construir en la vista de Documen
 - `apps/web/src/styles.css`: presentación y estados visuales del árbol y buscador.
 - Pruebas de componente de Documentación, si el módulo ya dispone del arnés adecuado; confirmar ubicación al iniciar implementación.
 
-## Fases de implementación
-1. Definir/confirmar la transformación de rutas del catálogo a nodos de carpeta y sus estados de apertura, sin modificar el contrato de API.
-2. Implementar árbol desplegable y selección integrada con el visor existente.
-3. Añadir búsqueda por título/ruta y restauración del árbol completo al limpiar la consulta.
-4. Verificar estados sin documentos, sin coincidencias, documento seleccionado y navegación desde enlaces Markdown; revisar accesibilidad y diff.
+## Tareas
+
+| Tarea | Estado | Criterios relacionados |
+|---|---|---|
+| Agrupar los documentos del catálogo en un árbol desplegable | Completada | REQ-001-AC-09 |
+| Integrar selección del documento con el visor existente | Completada | REQ-001-AC-09 |
+| Añadir búsqueda por título y ruta y restauración del árbol completo | Completada | REQ-001-AC-10 |
+| Verificar estados vacíos, navegación y accesibilidad | Completada | REQ-001-AC-09, REQ-001-AC-10 |
 
 ## Criterios de aceptación y relación con pruebas
 | Criterio de aceptación | Verificación |

@@ -1,8 +1,5 @@
 # Aplicaciones
 
-Cada directorio de apps/ representa una aplicación del producto. El Workbench se distribuye inicialmente como una aplicación local con frontend y backend coordinados, no como servicios cloud independientes.
+`web/` contiene la SPA React + Vite y `api/` el servidor local Node.js + Hono. Son módulos de una sola aplicación local, no servicios remotos independientes.
 
-- web/: SPA React + Vite que se ejecuta en el navegador local.
-- api/: servidor local Node.js + Hono; único componente con acceso al sistema de archivos, Git y registro local.
-
-Mantén separados los módulos de frontend y backend, pero evita tratarlos como microservicios. No añadas Dockerfiles ni configuración de despliegue remoto sin una necesidad aprobada.
+Consulta [arquitectura del frontend](../docs/architecture/frontend.md), [backend](../docs/architecture/backend.md) y [seguridad](../docs/quality/security-baseline.md).

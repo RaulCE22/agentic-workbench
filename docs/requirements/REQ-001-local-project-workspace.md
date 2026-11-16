@@ -112,10 +112,10 @@ Dada cualquier consulta disponible en la V0.1, cuando se ejecuta, entonces no ca
 Dado un proyecto registrado, cuando se reinicia Workbench, entonces se conserva su registro sin copiar sus archivos a otro directorio ni transmitirlos fuera del equipo.
 
 ### REQ-001-AC-09 — Navegar la documentación en árbol
-Dado un proyecto con documentos Markdown dentro de `docs/` y `plans/`, cuando el usuario abre Documentación, entonces ve los documentos organizados por carpeta y puede desplegar o contraer carpetas. Cuando selecciona un documento, se muestra en el visor.
+Dado un proyecto con documentos Markdown dentro de `docs/`, cuando el usuario abre Documentación, entonces ve los documentos organizados por carpeta y puede desplegar o contraer carpetas. Cuando selecciona un documento, se muestra en el visor.
 
 ### REQ-001-AC-10 — Buscar documentación
-Dado un proyecto con documentos Markdown dentro de `docs/` y `plans/`, cuando el usuario introduce una consulta en el buscador de Documentación, entonces se muestran los documentos cuyo título o ruta coincide con la consulta, sin buscar en el contenido. Cuando borra la consulta, vuelve a mostrarse el árbol completo.
+Dado un proyecto con documentos Markdown dentro de `docs/`, cuando el usuario introduce una consulta en el buscador de Documentación, entonces se muestran los documentos cuyo título o ruta coincide con la consulta, sin buscar en el contenido. Cuando borra la consulta, vuelve a mostrarse el árbol completo.
 
 ## Decisiones técnicas
 
@@ -123,5 +123,5 @@ Las decisiones de persistencia JSON, acceso local, rutas, límites de lectura, G
 
 ## Trazabilidad
 
-- Plan: ../../plans/completed/v0-1-project-workspace/plan.md
+- Plan: ../plans/completed/v0-1-project-workspace/plan.md
 - ADR: ../decisions/ADR-0005-arquitectura-local-first.md

@@ -4,11 +4,35 @@ Estas cuestiones están abiertas deliberadamente. Los agentes no deben resolverl
 
 | ID | Tema | Posición actual | Resolver antes de |
 |---|---|---|---|
-| REPO-01 | Convención documental común | Definir ubicaciones, metadatos e identificadores para roadmap, planes, tareas e hitos | Aprobación del requisito de vista de estado |
-| REPO-02 | Estados y finalización | Definir vocabulario, transiciones y qué evidencia permite declarar un elemento completado | Implementación del lector de estado |
-| REPO-03 | Documentación inconsistente | Definir cómo presentar datos ausentes, referencias rotas y estados contradictorios | Aprobación de criterios de aceptación |
 | API-01 | Actualización de vistas | La V0.1 consulta al refrescar; no hay eventos asíncronos | Si se requiere actualización automática |
 | UX-01 | Empaquetado | Aplicación web local primero; Tauri/Electron no seleccionados | Distribución a otros equipos |
+
+## Convención documental aprobada
+
+- La documentación del proyecto y los planes están organizados bajo `docs/`, incluidos `docs/plans/active/` y `docs/plans/completed/`.
+- Se conservarán fuera de `docs/` los archivos Markdown que deban permanecer en una ubicación raíz o técnica para que el repositorio y sus herramientas funcionen, como README e instrucciones de agentes.
+- Las tareas se registran dentro del plan que las agrupa.
+- El roadmap enlaza a requisitos y planes; no mantiene un estado duplicado por hito. Workbench deriva el hito solo de los estados de sus planes enlazados.
+- El estado del plan resume su trabajo y verificaciones; los estados de tareas ofrecen detalle y sirven para detectar inconsistencias.
+- El estado de aprobación de un requisito no representa el progreso de implementación.
+- Cada hito del roadmap tiene título, objetivo y enlaces explícitos a requisitos y planes; las fechas son opcionales y no se guarda estado manual.
+- Solo se reconocen los valores de estado definidos en REQ-002. Ante campos ausentes, valores no reconocidos, referencias rotas o contradicciones, Workbench informa de datos incompletos o inconsistentes sin elegir un estado ni reparar relaciones.
+
+### Vocabulario inicial de estados
+
+- Requisito: `Borrador`, `Aprobado`, `Retirado`.
+- Tarea: `Pendiente`, `En curso`, `Bloqueada`, `Completada`.
+- Plan: `Pendiente`, `En curso`, `Bloqueado`, `Listo para revisión`, `Completado`; el campo `Aprobación` es independiente (`Pendiente`, `Aprobado`, `No necesaria`).
+- Hito derivado: `Planificado`, `En curso`, `Bloqueado`, `Completado`.
+- Un hito está `Bloqueado` si algún plan enlazado está bloqueado; `Completado` si todos sus planes están completados; `En curso` si algún plan enlazado ha empezado; en otro caso está `Planificado`. Sin planes enlazados se muestra `Planificado`. Si la información falta o se contradice, se informa como incompleta y no se asigna un estado derivado.
+
+### Metadatos mínimos
+
+- Requisito: estado de aprobación documental.
+- Plan: requisitos relacionados, estado de ejecución y campo de aprobación separado.
+- Tarea: descripción, estado y criterios de aceptación relacionados; se define dentro del plan.
+- Roadmap/hito: título y enlaces a requisitos y planes; no incluye un campo de estado. Workbench deriva el estado únicamente de los planes enlazados.
+- Progreso: registro y evidencias; no duplica el estado vigente del plan.
 
 ## Decisiones aplazadas
 

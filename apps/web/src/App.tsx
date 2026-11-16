@@ -1,16 +1,17 @@
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
-import type { Project } from "@agentic-workbench/contracts";
+import type { Project, ProjectState } from "@agentic-workbench/contracts";
 import { api } from "./api";
 import { MarkdownView } from "./MarkdownView";
 
-type Section = "overview" | "files" | "documentation" | "features" | "git";
+type Section = "overview" | "files" | "documentation" | "features" | "state" | "git";
 const sections: Array<{ id: Section; label: string; icon: string }> = [
   { id: "overview", label: "Resumen", icon: "◫" },
   { id: "files", label: "Archivos", icon: "⌘" },
   { id: "documentation", label: "Documentación", icon: "▤" },
   { id: "features", label: "Requisitos", icon: "◇" },
+  { id: "state", label: "Estado del proyecto", icon: "◷" },
   { id: "git", label: "Git", icon: "⑂" },
 ];
 
@@ -97,6 +98,7 @@ export function App() {
           {section === "files" && <FilesPage project={project} />}
           {section === "documentation" && <DocumentationPage project={project} initialPath={documentPath} onPath={setDocumentPath} />}
           {section === "features" && <FeaturesPage project={project} onOpen={(path) => { setDocumentPath(path); setSection("documentation"); }} />}
+          {section === "state" && <ProjectStatePage project={project} onOpen={(path) => { setDocumentPath(path); setSection("documentation"); }} />}
           {section === "git" && <GitPage project={project} />}
         </>}
       </main>
@@ -157,7 +159,7 @@ function FilePreview({ project, filePath }: { project: Project; filePath: string
 
 function DocumentationPage({ project, initialPath, onPath }: { project: Project; initialPath: string; onPath: (path: string) => void }) {
   const [search, setSearch] = useState("");
-  const [expandedFolders, setExpandedFolders] = useState<Set<string>>(() => new Set(["docs", "plans"]));
+  const [expandedFolders, setExpandedFolders] = useState<Set<string>>(() => new Set(["docs", "docs/plans"]));
   const documents = useQuery({ queryKey: ["documents", project.id], queryFn: () => api.documents(project.id) });
   const selectedPath = initialPath || documents.data?.[0]?.path || "";
   const file = useQuery({ queryKey: ["file", project.id, selectedPath], queryFn: () => api.file(project.id, selectedPath), enabled: !!selectedPath });
@@ -171,7 +173,7 @@ function DocumentationPage({ project, initialPath, onPath }: { project: Project;
   return <div className="page-content split-browser docs-browser">
     <section className="panel docs-list-panel">
       <PanelHeading title="DOCUMENTACIÓN" />
-      <p className="subtle-copy">Markdown dentro de docs/ y plans/</p>
+      <p className="subtle-copy">Markdown dentro de docs/</p>
       <label className="docs-search"><span aria-hidden="true">⌕</span><input type="search" value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Buscar por título o ruta" aria-label="Buscar documentación por título o ruta" /></label>
       <div className="docs-tree" aria-label="Documentos por carpeta">
         {documents.isLoading && <div className="empty-inline">Cargando documentos…</div>}
@@ -190,7 +192,7 @@ type DocumentationFolderNode = { path: string; name: string; folders: Documentat
 
 function buildDocumentationTree(documents: DocumentationItem[], search: string): DocumentationFolderNode[] {
   const roots: DocumentationFolderNode[] = [];
-  for (const rootName of ["docs", "plans"]) {
+  for (const rootName of ["docs"]) {
     const root: DocumentationFolderNode = { path: rootName, name: rootName, folders: [], documents: [] };
     for (const document of documents) {
       if (!document.path.startsWith(`${rootName}/`)) continue;
@@ -235,6 +237,50 @@ function DocumentationFolder({ folder, depth, selectedPath, expandedFolders, sea
 function FeaturesPage({ project, onOpen }: { project: Project; onOpen: (path: string) => void }) {
   const features = useQuery({ queryKey: ["features", project.id], queryFn: () => api.features(project.id) });
   return <div className="page-content feature-page"><div className="section-intro"><p>Catálogo de requisitos documentados en el proyecto.</p><span>{features.data?.length ?? 0} requisitos</span></div><section className="panel feature-list">{features.data?.map((feature) => <div className="feature-row" key={feature.id}><button className="feature-open" onClick={() => onOpen(feature.path)}><span className="feature-id">{feature.id}</span><span className="feature-title"><b>{feature.title}</b><small>{feature.path}</small></span></button>{feature.plans.map((plan) => <button className="plan-link" key={plan} onClick={() => onOpen(plan)} title={plan}>Plan ↗</button>)}{feature.priority && <span className="priority-chip">{feature.priority}</span>}<span className="status-chip">{feature.status}</span><span className="arrow">↗</span></div>)}{features.data?.length === 0 && <div className="empty-inline">No se encontraron archivos REQ-### dentro de docs/requirements.</div>}</section></div>;
+}
+
+function ProjectStatePage({ project, onOpen }: { project: Project; onOpen: (path: string) => void }) {
+  const client = useQueryClient();
+  const state = useQuery({ queryKey: ["state", project.id], queryFn: () => api.state(project.id) });
+  return <ProjectStateSummary state={state.data} loading={state.isLoading} error={state.error instanceof Error ? state.error : null} onRefresh={() => void client.invalidateQueries({ queryKey: ["state", project.id] })} onOpen={onOpen} />;
+}
+
+export function ProjectStateSummary({ state, loading, error, onRefresh, onOpen }: {
+  state: ProjectState | undefined;
+  loading: boolean;
+  error: Error | null;
+  onRefresh: () => void;
+  onOpen: (path: string) => void;
+}) {
+  return <div className="page-content project-state-page">
+    <div className="section-intro"><p>Resumen derivado del roadmap y los planes del repositorio.</p><button className="text-action" onClick={onRefresh}>Actualizar estado ↻</button></div>
+    {error && <div className="inline-error" role="alert">{error.message}</div>}
+    {loading && <div className="panel empty-inline">Leyendo roadmap y planes…</div>}
+    {state?.issues.map((issue, index) => <StateIssue key={`${issue.path}-${index}`} issue={issue} onOpen={onOpen} />)}
+    {!loading && state?.milestones.length === 0 && <div className="panel empty-inline">No se encontraron hitos reconocibles en el roadmap.</div>}
+    {state?.milestones.map((milestone, index) => <section className="panel milestone-card" key={`${milestone.path}-${milestone.title}-${index}`}>
+      <div className="milestone-heading"><div><span className="eyebrow">HITO</span><h2>{milestone.title}</h2></div><span className={`state-chip ${statusTone(milestone.status)}`}>{milestone.status ?? "Incompleto"}</span></div>
+      {milestone.objective && <p className="milestone-objective">{milestone.objective}</p>}
+      {milestone.issues.map((issue, issueIndex) => <StateIssue key={`${issue.path}-${issueIndex}`} issue={issue} onOpen={onOpen} />)}
+      <div className="state-links"><button onClick={() => onOpen(milestone.path)}>Abrir roadmap ↗</button>{milestone.requirements.map((requirement) => <button key={requirement.path} onClick={() => onOpen(requirement.path)}>{requirement.title} ↗</button>)}</div>
+      <div className="state-plans">{milestone.plans.map((plan) => <article className="state-plan" key={plan.path}>
+        <div className="state-plan-heading"><button className="state-source-link" onClick={() => onOpen(plan.path)}>{plan.title} ↗</button><span className={`state-chip ${statusTone(plan.status)}`}>{plan.status ?? "Incompleto"}</span></div>
+        {plan.issues.map((issue, issueIndex) => <StateIssue key={`${issue.path}-${issueIndex}`} issue={issue} onOpen={onOpen} />)}
+        {plan.tasks.length > 0 && <ul className="state-task-list">{plan.tasks.map((task, taskIndex) => <li key={`${task.title}-${taskIndex}`}><span className={`state-chip ${statusTone(task.status)}`}>{task.status ?? "Sin estado"}</span><span className="state-task-title">{task.title}</span>{task.requirements.map((requirement) => <span className="state-task-requirement" key={requirement}>{requirement}</span>)}<button className="state-task-source" aria-label={`Abrir fuente de ${task.title}`} onClick={() => onOpen(task.path)}>↗</button></li>)}</ul>}
+      </article>)}</div>
+    </section>)}
+  </div>;
+}
+
+function StateIssue({ issue, onOpen }: { issue: ProjectState["issues"][number]; onOpen: (path: string) => void }) {
+  return <div className={`state-issue ${issue.kind}`} role="status"><span aria-hidden="true">{issue.kind === "contradiction" ? "⚠" : "ⓘ"}</span><span>{issue.message}</span><button onClick={() => onOpen(issue.path)}>Fuente ↗</button></div>;
+}
+
+function statusTone(status: string | null) {
+  if (status === "Completada" || status === "Completado") return "complete";
+  if (status === "En curso" || status === "Listo para revisión") return "active";
+  if (status === "Bloqueada" || status === "Bloqueado") return "blocked";
+  return "planned";
 }
 
 function GitPage({ project }: { project: Project }) {

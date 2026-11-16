@@ -4,8 +4,8 @@
 - Plan: ./plan.md
 - Última actualización: AAAA-MM-DD
 
-## Estado actual
-No iniciado | En curso | Bloqueado | Listo para revisión | Completado
+## Resumen de progreso
+Describe brevemente qué ha avanzado. El estado vigente del plan se mantiene en `plan.md` y no se duplica aquí.
 
 ## Trabajo completado
 - 

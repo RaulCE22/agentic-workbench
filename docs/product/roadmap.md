@@ -2,6 +2,8 @@
 
 La hoja de ruta de cada repositorio describe ese proyecto. En este archivo, el repositorio de Agentic Workbench describe su propia hoja de ruta. Las versiones no implican fechas ni una promesa de implementación automática.
 
+Cada hito enlaza sus requisitos y planes. No se almacena un estado manual del hito: Workbench lo deriva de los estados de los planes enlazados. Las tareas se consultan dentro de cada plan y permiten señalar inconsistencias con su resumen.
+
 ## V0.1 — Project Workspace
 
 **Objetivo:** convertir el repositorio local en un espacio de trabajo navegable.
@@ -15,20 +17,24 @@ Incluye:
 - Vista Git de solo lectura: rama, estado, ficheros modificados y diff.
 - Persistencia local de proyectos registrados y preferencias.
 
-Estado: completado.
+Requisitos: [REQ-001](../requirements/REQ-001-local-project-workspace.md).
+Planes: [Plan V0.1](../plans/completed/v0-1-project-workspace/plan.md), [Árbol y búsqueda de documentación](../plans/completed/documentation-tree-search/plan.md).
 
 ## V0.2 — Estado del repositorio
 
 **Objetivo:** ofrecer una vista resumida del estado declarado por cada repositorio.
 
-Alcance propuesto:
+Alcance entregado:
 - Mostrar el roadmap del repositorio seleccionado.
 - Resumir planes y tareas en curso y elementos completados.
 - Mostrar hitos y enlazar cada elemento con su documento fuente.
 - Leer una estructura común que todos los repositorios incorporados acuerden seguir.
 - No mantener en Workbench una copia de los estados del repositorio.
 
-La estructura documental y las reglas para representar estados, tareas e hitos deben definirse antes de implementar esta versión. No se ha fijado todavía un mecanismo de actualización automática.
+La convención documental, los estados reconocidos y el tratamiento de datos incompletos están implementados según REQ-002 y ADR-0008. El resumen se actualiza al solicitarlo; no hay actualización automática.
+
+Requisitos: [REQ-002](../requirements/REQ-002-repository-project-state.md).
+Planes: [Visor del estado del repositorio](../plans/completed/repository-project-state-viewer/plan.md).
 
 ## V0.3 — Trazabilidad de funcionalidades
 

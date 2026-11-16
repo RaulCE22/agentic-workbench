@@ -11,12 +11,12 @@ Completado — árbol y búsqueda implementados; comprobaciones estáticas corre
 - Actualizado REQ-001 con los criterios acordados de árbol y búsqueda por título/ruta.
 - Redactado el plan de implementación y verificación para la vista de Documentación.
 - Aprobado el plan por el propietario del proyecto el 2026-11-12.
-- Implementado árbol desplegable para `docs/` y `plans/`, selección integrada con el visor y búsqueda por título/ruta.
+- Implementado árbol desplegable para documentos bajo `docs/`, selección integrada con el visor y búsqueda por título/ruta.
 - La búsqueda despliega las ramas con coincidencias; al limpiar el campo vuelve la navegación completa.
 
 ## Cambios realizados
 - `docs/requirements/REQ-001-local-project-workspace.md`: añadidos AC-09 y AC-10.
-- `plans/active/documentation-tree-search/plan.md`: alcance, diseño, fases y verificaciones.
+- `docs/plans/completed/documentation-tree-search/plan.md`: alcance, diseño, fases y verificaciones.
 - `apps/web/src/App.tsx`: árbol documental, filtro y estados de carga/error/vacío.
 - `apps/web/src/styles.css`: estilos del buscador y árbol.
 

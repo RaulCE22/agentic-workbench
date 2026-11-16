@@ -43,7 +43,7 @@ if (kind === "requirement") {
   await writeFile(filePath, content, { flag: "wx" });
   console.log(`Creado ${filePath}`);
 } else {
-  const directory = path.join("plans/active", slug);
+  const directory = path.join("docs/plans/active", slug);
   if (await exists(directory)) throw new Error(`El plan ya existe: ${directory}`);
   await mkdir(directory, { recursive: true });
   const plan = await readFile("docs/templates/implementation-plan.md", "utf8");

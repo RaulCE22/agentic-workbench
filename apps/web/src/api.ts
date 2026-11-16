@@ -6,6 +6,7 @@ import {
   GitStatusSchema,
   ProjectSchema,
   ProjectStoreSchema,
+  ProjectStateSchema,
   RequirementListSchema,
 } from "@agentic-workbench/contracts";
 
@@ -32,5 +33,6 @@ export const api = {
   file: (id: string, path: string) => request(`${projectUrl(id, "file")}?path=${encodeURIComponent(path)}`, FileContentSchema),
   documents: (id: string) => request(projectUrl(id, "documents"), DocumentSchema.array()),
   features: (id: string) => request(projectUrl(id, "features"), RequirementListSchema),
+  state: (id: string) => request(projectUrl(id, "state"), ProjectStateSchema),
   git: (id: string) => request(projectUrl(id, "git"), GitStatusSchema),
 };
