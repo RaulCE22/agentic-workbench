@@ -14,7 +14,7 @@ description: Convierte un requisito analizado en un plan de implementación acot
 6. Relaciona cada criterio de aceptación con un método de verificación.
 7. Identifica migraciones, implicaciones de seguridad, impacto en despliegue y estrategia de reversión.
 8. Señala las decisiones que requieren aprobación humana.
-9. Guarda plans/active/<slug>/plan.md y crea o actualiza progress.md.
+9. Guarda `docs/plans/active/<slug>/plan.md` y crea o actualiza `progress.md` junto al plan.
 
 ## Resultado
 Un plan que otro agente pueda implementar sin reinterpretar la intención del producto.

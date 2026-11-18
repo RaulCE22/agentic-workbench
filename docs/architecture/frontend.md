@@ -2,6 +2,8 @@
 
 Estado: stack adoptado. La aplicación se sirve localmente desde el backend Node; el navegador no accede directamente al sistema de archivos ni a procesos del sistema.
 
+Este documento describe exclusivamente la arquitectura concreta de `apps/web`. El estándar FSD aceptado para proyectos nuevos está en [docs/standards/frontend.md](../standards/frontend.md); no convierte esta estructura en FSD ni autoriza una refactorización. ADR-0002 sigue siendo la decisión aceptada del stack.
+
 ## Tecnologías
 
 - React + Vite + TypeScript.

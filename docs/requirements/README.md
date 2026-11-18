@@ -8,5 +8,6 @@ Los requisitos describen comportamiento observable y criterios de aceptación; n
 |---|---|---|
 | REQ-001 | [Espacio de trabajo local de proyectos](REQ-001-local-project-workspace.md) | Aprobado |
 | REQ-002 | [Estado del proyecto desde el repositorio](REQ-002-repository-project-state.md) | Aprobado |
+| REQ-003 | [Estándares de ingeniería frontend y backend](REQ-003-engineering-standards-frontend-backend.md) | Aprobado |
 
 Utiliza pnpm run new:requirement -- <slug> para crear el siguiente borrador numerado.

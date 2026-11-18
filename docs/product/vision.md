@@ -2,7 +2,7 @@
 
 ## Propósito
 
-Agentic Workbench es un visor local del estado continuo de un proyecto de software. Lee la estructura y documentación del repositorio para reunir en una aplicación la información sobre requisitos, planes, tareas, hitos, roadmap y cambios.
+Agentic Workbench es una aplicación local para consultar el estado de proyectos de software y mantiene dos estándares de ingeniería reutilizables (frontend y backend) para proyectos personales. Lee estructura y documentación para reunir requisitos, planes, tareas, hitos, roadmap y cambios. No genera aplicaciones.
 
 ## Problema
 
@@ -47,6 +47,7 @@ Las vistas deben enlazar a sus archivos de origen y distinguir los datos explíc
 - No ejecuta ni controla agentes CLI.
 - No sustituye el terminal, Git ni los documentos del proyecto.
 - No es una plataforma cloud ni un servicio multiusuario.
+- No es un generador de aplicaciones ni ofrece perfiles arquitectónicos seleccionables.
 - No conoce actividad que no esté reflejada en los archivos o en Git.
 - No muestra razonamiento privado de modelos ni infiere acciones que no hayan ocurrido.
 

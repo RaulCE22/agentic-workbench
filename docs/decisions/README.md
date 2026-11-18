@@ -12,7 +12,12 @@ Un ADR propuesto todavía no es una regla aceptada.
 | ADR-0006 | Estrategia de integración de agentes CLI | Aplazado |
 | ADR-0007 | Seguridad simple y persistencia local para V0.1 | Aceptado |
 | ADR-0008 | El repositorio como fuente del estado del proyecto | Aceptado |
+| ADR-0009 | Estándar frontend Feature-Sliced Design | Aceptado |
+| ADR-0010 | Estándar backend monolito modular | Aceptado (estructura; stack condicionado) |
+| ADR-0011 | Validación automatizada de límites arquitectónicos | Aceptado, sujeto al piloto |
 
 ADR-0001 y ADR-0002 se conservan como base de ingeniería. Las decisiones heredadas sobre PostgreSQL, Better Auth y despliegue en Hetzner no se aplican a la arquitectura inicial de Workbench.
 
 Utiliza docs/templates/adr.md para registrar nuevas decisiones. No modifiques silenciosamente una decisión aceptada: sustitúyela mediante un nuevo ADR.
+
+ADR-0010 no cierra el stack de ADR-0003. ADR-0011 requiere confirmar herramientas y reglas con los pilotos descritos en el plan V0.3.

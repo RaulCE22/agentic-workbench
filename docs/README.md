@@ -8,6 +8,7 @@ Empieza por este índice y abre únicamente los documentos necesarios para la ta
 | Hoja de ruta | [Roadmap](product/roadmap.md) | Entregas incrementales y alcance |
 | Requisitos | [Requisitos](requirements/README.md) | Comportamiento y criterios de aceptación |
 | Arquitectura | [Visión general](architecture/overview.md) | Topología local y límites del sistema |
+| Estándares reutilizables | [Estándares](standards/README.md) | Arquitecturas frontend y backend para proyectos nuevos |
 | Backend | [Servidor local](architecture/backend.md) | API, sistema de archivos, Git y persistencia local |
 | Frontend | [Frontend](architecture/frontend.md) | Stack y convenciones de interfaz |
 | Runtime | [Runtime](architecture/runtime.md) | Versiones de Node.js y compatibilidad |
@@ -20,6 +21,8 @@ Empieza por este índice y abre únicamente los documentos necesarios para la ta
 | Contexto | [Gestión del contexto](workflows/context-management.md) | Carga progresiva de información |
 | Plantillas | [Plantillas](templates/) | Requisitos, ADR, planes y revisiones |
 | Planes | [Planes de trabajo](plans/README.md) | Trabajo activo y completado |
+
+Workbench mantiene estos estándares reutilizables, sin convertirse en generador. La arquitectura concreta de Workbench sigue gobernada por sus ADR aceptados y documentos de arquitectura.
 
 ## Jerarquía documental
 

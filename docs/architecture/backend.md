@@ -2,6 +2,8 @@
 
 Estado: dirección arquitectónica aceptada; detalles de implementación pendientes de pruebas técnicas.
 
+Este documento describe exclusivamente el backend local de Workbench. El estándar modular aceptado para backends futuros está en [docs/standards/backend.md](../standards/backend.md) y no reemplaza esta arquitectura. Workbench conserva Node 24.15, Hono y persistencia JSON local; PostgreSQL, Drizzle y Better Auth no son requisitos de este producto. ADR-0003 permanece propuesto y sustituido para este producto.
+
 ## Responsabilidad
 
 El backend no es una API de negocio remota. Es el proceso de confianza local que conecta la interfaz con los recursos del sistema operativo.

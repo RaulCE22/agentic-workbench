@@ -10,6 +10,8 @@ Skills iniciales:
 - feature-implementation
 - test-and-verify
 - code-review
+- frontend-architecture
+- backend-architecture
 
 ## Descubrimiento por CLI
 

@@ -17,6 +17,8 @@
 - Cursor conserva una regla breve que remite a AGENTS.md.
 - Codex utiliza AGENTS.md; no crear CODEX.md duplicado.
 - Las skills siguen el formato Agent Skills en .agents/skills/.
+- Las skills `frontend-architecture` y `backend-architecture` remiten a los estándares compartidos; no se mantienen copias por proveedor.
+- Para adoptar una skill en otro repositorio, copia su directorio desde `.agents/skills/` junto con el documento correspondiente de `docs/standards/`.
 - Claude Code descubre skills en .claude/skills/, enlazado a .agents/skills/.
 - No asumas que todos los CLI interpretan igual permisos, hooks, subagentes, MCP o selección de modelo.
 - Verifica nombres, rutas y capacidades contra la versión instalada antes de añadir configuraciones avanzadas.

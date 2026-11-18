@@ -1,0 +1,10 @@
+{
+  "name": "backend-architecture-checks",
+  "private": true,
+  "scripts": {
+    "check:architecture:backend": "node check-architecture.cjs"
+  },
+  "devDependencies": {
+    "dependency-cruiser": "18.6.0"
+  }
+}

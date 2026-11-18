@@ -1,0 +1,12 @@
+{
+  "name": "frontend-architecture-checks",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check:architecture:frontend": "steiger src"
+  },
+  "devDependencies": {
+    "@feature-sliced/steiger-plugin": "0.8.2",
+    "steiger": "0.10.0"
+  }
+}

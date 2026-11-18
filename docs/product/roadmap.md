@@ -36,14 +36,21 @@ La convención documental, los estados reconocidos y el tratamiento de datos inc
 Requisitos: [REQ-002](../requirements/REQ-002-repository-project-state.md).
 Planes: [Visor del estado del repositorio](../plans/completed/repository-project-state-viewer/plan.md).
 
-## V0.3 — Trazabilidad de funcionalidades
+## V0.3 — Estándares de ingeniería Frontend y Backend
 
-**Objetivo:** hacer navegable el ciclo documentado de cada funcionalidad.
+**Objetivo:** establecer dos arquitecturas oficiales, documentadas, reutilizables y verificables para proyectos personales nuevos.
 
 Alcance propuesto:
-- Relacionar requisitos, criterios de aceptación, planes, tareas y evidencias.
-- Mostrar dependencias, bloqueos y resultados de verificación declarados en los documentos.
-- Detectar referencias y estados ausentes o inconsistentes.
+- Definir FSD para frontend y monolito modular para backend, adaptados a los stacks decididos.
+- Documentar responsabilidades, estructuras, dependencias, pruebas, contratos y validación.
+- Crear skills compartidas para los agentes y estructuras iniciales reutilizables.
+- Documentar cómo incorporar los estándares en repositorios nuevos; un proyecto full-stack combina ambos.
+- Evaluar y configurar validadores automáticos frontend y backend.
+
+Requisito: [REQ-003](../requirements/REQ-003-engineering-standards-frontend-backend.md).
+Plan: [Estándares de ingeniería V0.3](../plans/active/engineering-standards-v03/plan.md).
+
+La propuesta anterior de trazabilidad de funcionalidades queda aplazada, sin compromiso ni hito asignado.
 
 ## V0.4 — Git y aislamiento de tareas
 

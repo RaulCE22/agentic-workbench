@@ -2,7 +2,7 @@
 
 ## Identidad del proyecto
 
-Agentic Workbench es una aplicación web local para gestionar proyectos, funcionalidades, documentación, agentes CLI nativos y cambios Git. No es una base reutilizable de ingeniería ni un IDE. Este repositorio es la fuente de verdad de producto, requisitos, arquitectura, decisiones, flujos de trabajo y controles de calidad.
+Agentic Workbench es una aplicación web local para consultar proyectos, documentación y cambios Git. Este repositorio también mantiene dos estándares reutilizables de ingeniería (frontend y backend) para aplicar en proyectos personales; no es un generador de aplicaciones ni un IDE. La arquitectura concreta del producto sigue sus propios ADR y documentos.
 
 ## Herramientas agénticas admitidas
 
@@ -24,6 +24,7 @@ El desarrollo del repositorio utiliza cuatro CLI nativos: Cursor Agent (agent), 
 - Respeta los límites documentados entre apps/web, apps/api y packages/.
 - Reutiliza el stack establecido; justifica y solicita aprobación para nuevas dependencias.
 - TanStack Query gestiona estado remoto del backend local; Zustand se reserva para estado de cliente o interfaz.
+- Los proyectos nuevos pueden adoptar los estándares genéricos de `docs/standards/`; no sustituyen la arquitectura local descrita en `docs/architecture/`.
 - Utiliza Zod en los límites de confianza.
 - Mantén la lógica de negocio fuera de componentes React y manejadores HTTP.
 - No generes código de aplicación antes de que exista un requisito y un plan aprobados.
