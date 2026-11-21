@@ -66,4 +66,4 @@ Documentación en español; convenciones pragmáticas, deterministas, mantenible
 
 ## Trazabilidad
 - Pruebas: pnpm run verify; revisión documental; verificaciones específicas que se definan durante implementación.
-- Plan de implementación: docs/plans/active/engineering-standards-v03/plan.md
+- Plan de implementación: docs/plans/completed/engineering-standards-v03/plan.md

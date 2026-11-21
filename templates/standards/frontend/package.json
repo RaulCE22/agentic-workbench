@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "check:architecture:frontend": "steiger src"
+    "check:architecture:frontend": "CHOKIDAR_USEPOLLING=1 steiger src"
   },
   "devDependencies": {
     "@feature-sliced/steiger-plugin": "0.8.2",

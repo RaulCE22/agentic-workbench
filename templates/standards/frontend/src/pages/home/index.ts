@@ -1,3 +1,1 @@
-export function HomePage() {
-  return 'Home';
-}
+export { HomePage } from './ui/home-page.js';

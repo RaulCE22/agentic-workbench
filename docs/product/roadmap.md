@@ -40,7 +40,7 @@ Planes: [Visor del estado del repositorio](../plans/completed/repository-project
 
 **Objetivo:** establecer dos arquitecturas oficiales, documentadas, reutilizables y verificables para proyectos personales nuevos.
 
-Alcance propuesto:
+Alcance entregado:
 - Definir FSD para frontend y monolito modular para backend, adaptados a los stacks decididos.
 - Documentar responsabilidades, estructuras, dependencias, pruebas, contratos y validación.
 - Crear skills compartidas para los agentes y estructuras iniciales reutilizables.
@@ -48,9 +48,9 @@ Alcance propuesto:
 - Evaluar y configurar validadores automáticos frontend y backend.
 
 Requisito: [REQ-003](../requirements/REQ-003-engineering-standards-frontend-backend.md).
-Plan: [Estándares de ingeniería V0.3](../plans/active/engineering-standards-v03/plan.md).
+Plan: [Estándares de ingeniería V0.3](../plans/completed/engineering-standards-v03/plan.md).
 
-La propuesta anterior de trazabilidad de funcionalidades queda aplazada, sin compromiso ni hito asignado.
+Los estándares, skills, esqueletos y validadores están publicados según REQ-003 y ADR-0009..0011. Los pilotos frontend y backend confirmaron las reglas cubiertas y el modo de fallo determinista de cada validador. La propuesta anterior de trazabilidad de funcionalidades queda aplazada, sin compromiso ni hito asignado.
 
 ## V0.4 — Git y aislamiento de tareas
 

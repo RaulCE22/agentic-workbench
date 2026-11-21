@@ -14,10 +14,10 @@ Un ADR propuesto todavía no es una regla aceptada.
 | ADR-0008 | El repositorio como fuente del estado del proyecto | Aceptado |
 | ADR-0009 | Estándar frontend Feature-Sliced Design | Aceptado |
 | ADR-0010 | Estándar backend monolito modular | Aceptado (estructura; stack condicionado) |
-| ADR-0011 | Validación automatizada de límites arquitectónicos | Aceptado, sujeto al piloto |
+| ADR-0011 | Validación automatizada de límites arquitectónicos | Aceptado |
 
 ADR-0001 y ADR-0002 se conservan como base de ingeniería. Las decisiones heredadas sobre PostgreSQL, Better Auth y despliegue en Hetzner no se aplican a la arquitectura inicial de Workbench.
 
 Utiliza docs/templates/adr.md para registrar nuevas decisiones. No modifiques silenciosamente una decisión aceptada: sustitúyela mediante un nuevo ADR.
 
-ADR-0010 no cierra el stack de ADR-0003. ADR-0011 requiere confirmar herramientas y reglas con los pilotos descritos en el plan V0.3.
+ADR-0010 no cierra el stack de ADR-0003. ADR-0011 quedó confirmado por los pilotos del plan V0.3: Steiger y dependency-cruiser fallan de forma determinista sobre fixtures infractoras.

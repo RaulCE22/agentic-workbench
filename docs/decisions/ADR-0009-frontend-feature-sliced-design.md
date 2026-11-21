@@ -27,7 +27,7 @@ La documentación oficial vigente de FSD permite omitir capas y define dependenc
 - Riesgos: beta/cambios de configuración de Steiger; imports alias pueden necesitar configuración precisa.
 
 ## Restricciones y seguimiento
-La decisión fue aceptada por el propietario el 2026-11-17. El piloto de Steiger queda como seguimiento: el paquete inicial fija versiones, pero la ejecución no pudo completarse en el entorno actual por `EMFILE`. No aplicar FSD retroactivamente a `apps/web` sin alcance aprobado.
+La decisión fue aceptada por el propietario el 2026-11-17. El piloto de Steiger se completó el 2026-11-21 sobre un esqueleto conforme y un fixture infractor; en macOS el paquete inicial usa `CHOKIDAR_USEPOLLING=1` para evitar `EMFILE`. No aplicar FSD retroactivamente a `apps/web` sin alcance aprobado.
 
 ## Referencias
 - https://feature-sliced.design/docs/reference
