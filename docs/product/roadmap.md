@@ -47,8 +47,8 @@ Alcance entregado:
 - Documentar cómo incorporar los estándares en repositorios nuevos; un proyecto full-stack combina ambos.
 - Evaluar y configurar validadores automáticos frontend y backend.
 
-Requisito: [REQ-003](../requirements/REQ-003-engineering-standards-frontend-backend.md).
-Plan: [Estándares de ingeniería V0.3](../plans/completed/engineering-standards-v03/plan.md).
+Requisitos: [REQ-003](../requirements/REQ-003-engineering-standards-frontend-backend.md).
+Planes: [Estándares de ingeniería V0.3](../plans/completed/engineering-standards-v03/plan.md).
 
 Los estándares, skills, esqueletos y validadores están publicados según REQ-003 y ADR-0009..0011. Los pilotos frontend y backend confirmaron las reglas cubiertas y el modo de fallo determinista de cada validador. La propuesta anterior de trazabilidad de funcionalidades queda aplazada, sin compromiso ni hito asignado.
 

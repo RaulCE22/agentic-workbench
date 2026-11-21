@@ -58,6 +58,7 @@ describe("estado declarado del proyecto", () => {
     expect(response.status).toBe(200);
     expect(state.milestones.find((milestone) => milestone.title.startsWith("V0.1"))?.status).toBe("Completado");
     expect(state.milestones.find((milestone) => milestone.title.startsWith("V0.2"))?.status).toBe("Completado");
+    expect(state.milestones.find((milestone) => milestone.title.startsWith("V0.3"))?.status).toBe("Completado");
   });
 
   it("deriva el hito de los planes enlazados y devuelve las tareas con sus fuentes", async () => {
